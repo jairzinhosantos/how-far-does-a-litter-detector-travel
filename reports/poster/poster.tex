@@ -41,9 +41,13 @@
  {\fontsize{28}{33}\selectfont Cross-Domain Urban Waste Detection Across
  Handheld, Dashcam and Drone Imagery}}}
 \author{Jairzinho Santos}
-\institute{Universidad Nacional de Ingenier\'ia, Lima, Peru \quad---\quad
- Computer Vision, MSc in Artificial Intelligence, 2026-I \quad---\quad
- Prof.\ Elian Laura Riveros}
+\institute{
+  {\Large
+  Universidad Nacional de Ingenier\'ia\\
+  MSc in Artificial Intelligence\\
+  Computer Vision, Prof.\ Elian Laura Riveros
+  }
+}
 
 \begin{document}
 \maketitle
@@ -53,7 +57,7 @@
 \column{0.5}
 \block{The question}{
 Litter detection benchmarks are evaluated \textbf{in-domain}, yet any city
-deploying mixed sensors --- citizen photos, garbage-truck dashcams, drones ---
+deploying mixed sensors --- citizen photos, garbage-truck dashcams, drones
 implicitly assumes detectors transfer between viewpoints. \textbf{Nobody had
 measured whether they do.} We train and evaluate across three public domains
 under one audited protocol:
@@ -72,7 +76,7 @@ UAVVaste & drone & 772 & 72 px & 66 \\
 \vspace{6mm}
 \textbf{19 experiments, 4 model families} (Faster R-CNN, YOLOv11n, FCN,
 VGG+CAM), every metric from the same pycocotools contract against frozen
-ground truths --- tables and figures are generated, never transcribed.
+ground truths tables and figures are generated, never transcribed.
 }
 
 \column{0.5}
@@ -82,15 +86,15 @@ cross-referencing) on the released datasets surfaced:
 
 \vspace{4mm}
 \begin{itemize}
-\item \textbf{H4 --- video-level leakage in RoLID-11K's official splits:}
+\item \textbf{H4 - video-level leakage in RoLID-11K's official splits:}
   58.2\% of test frames share a source video with training (87\% intra-video
   visual redundancy). \textcolor{acRed}{\textbf{Published baselines are
   inflated by scene memorization.}}
-\item H1/H2 --- TACO basename collisions across batches; $\sim$37\% pending
+\item H1/H2 - TACO basename collisions across batches; $\sim$37\% pending
   EXIF rotations with boxes annotated on the rotated frame.
-\item H5/H6 --- duplicate image between val and test (RoLID); near-duplicate
+\item H5/H6 - duplicate image between val and test (RoLID); near-duplicate
   pair crossing train/test (UAVVaste).
-\item H3/H7 --- release folders do not encode capture hour; annotation frames
+\item H3/H7 - release folders do not encode capture hour; annotation frames
   inconsistent across datasets.
 \end{itemize}
 
@@ -110,7 +114,7 @@ every class within 0.1 pp of the 15\% test target).
 \keynum{82\%}{cross-domain mAP$_{50}$ drop}
 \keynum{+21\%}{AP$_{50}$ inflation from split leakage}
 \keynum{+8.3}{AP$_{50}$ from 640$\rightarrow$1024 px (dashcam)}
-\keynum{16$\times$}{smaller model, within 1--4 AP$_{50}$ points}
+\keynum{16$\times$}{smaller model, within 1-4 AP$_{50}$ points}
 }
 \end{columns}
 
@@ -124,7 +128,7 @@ every class within 0.1 pp of the 15\% test target).
 In-domain mean 0.639 AP$_{50}$; cross-domain 0.118. The dashcam domain is an
 \textbf{island} (AP$_{50}\le 0.064$ both directions): its 22-px median object
 falls below the smallest 32-px FPN anchor. Handheld$\rightarrow$drone retains
-68\% --- scale, not appearance, dominates the gap.
+68\% scale, not appearance, dominates the gap.
 }
 
 \column{0.5}
@@ -134,7 +138,7 @@ falls below the smallest 32-px FPN anchor. Handheld$\rightarrow$drone retains
 \end{center}
 On the \emph{same} clean test set, the model trained on the leaky official
 split scores \textbf{0.844 vs.\ 0.695} for the cleanly trained one:
-\textbf{+21\% relative} --- memorized scenes, not generalization. Group-aware
+\textbf{+21\% relative} memorized scenes, not generalization. Group-aware
 (by-video) splitting removes the bias at zero cost.
 }
 \end{columns}
@@ -157,9 +161,9 @@ classes by +0.014 AP$_{50}$ on average.
 \begin{center}
 \includegraphics[width=0.70\linewidth]{comparativa_familias_en.png}
 \end{center}
-YOLOv11n stays within 1--4 AP$_{50}$ points of Faster R-CNN on single-class
-litter (0.695 vs 0.707 dashcam) --- lightweight deployment is viable. The gap
-widens on materials (0.157--0.192 vs 0.244--0.246). FCN: 0.577 test IoU;
+YOLOv11n stays within 1-4 AP$_{50}$ points of Faster R-CNN on single-class
+litter (0.695 vs 0.707 dashcam) lightweight deployment is viable. The gap
+widens on materials (0.157-0.192 vs 0.244-0.246). FCN: 0.577 test IoU;
 VGG-16 crops: 97.8\% accuracy with CAM evidence on the object.
 }
 \end{columns}
@@ -172,7 +176,7 @@ VGG-16 crops: 97.8\% accuracy with CAM evidence on the object.
 \includegraphics[width=0.42\linewidth]{tide_descomposicion_en.png}
 \end{center}
 Multiclass models lose up to \textbf{24.6 dAP to classification} vs.\ 1.7 to
-localization --- naming the material, not finding the litter, is the
+localization naming the material, not finding the litter, is the
 bottleneck; in-domain dashcam models miss little (dAP$_{\text{Miss}}\le 3.9$).
 }
 
@@ -189,8 +193,8 @@ bottleneck; in-domain dashcam models miss little (dAP$_{\text{Miss}}\le 3.9$).
 \vspace{3mm}
 \textbf{Three released routes:} demo with pretrained weights on any photo
 ($\sim$5 min, CPU) \,·\, regenerate every paper number from artifacts
-($\sim$10 min) \,·\, full pipeline from public data. Code, weights, splits
-and video: \textbf{github.com --- released with the course hand-in.}
+($\sim$10 min) \,·\, full pipeline from public data. Code, weights and
+splits: \textbf{github.com released with the course hand-in.}
 }
 \end{columns}
 

@@ -1,7 +1,7 @@
 # Detección de Residuos Urbanos en Escenas Reales
 
-**Proyecto final · Computer Vision · Maestría en Inteligencia Artificial · UNI · 2026-I**
-Jairzinho Santos — Prof. Mg. Elian Laura Riveros
+- **Proyecto:** Detección de Residuos Urbanos · Computer Vision · UNI 2026-I
+- **Autor:** Jairzinho Santos
 
 **Bitácora técnica del proyecto** (documento histórico, en español): crece un capítulo por
 etapa y registra qué se hizo, por qué, qué se encontró y qué decisión salió de cada hallazgo.
@@ -14,16 +14,16 @@ Cada capítulo mapea a una notebook reproducible y a una sección del paper.
 
 ## Estado del proyecto
 
-- [x] **Cap. 1 — Adquisición** (`00_ingesta_descarga.ipynb`): 21 GB en `raw/`, verificados y descomprimidos a `bronze/`
-- [x] **Cap. 2 — EDA y auditoría** (`01_eda_bronze.ipynb`): 18.339 imágenes y 56.195 anotaciones caracterizadas; 6 decisiones de alcance tomadas
-- [x] **Cap. 3 — Curación → `silver`** (`02_curacion_silver.ipynb`): C1–C5 aplicadas, taxonomía A/B, 4 esquemas de split congelados y verificados
-- [x] **Cap. 4 — Export → `gold`** (`03_export_gold.ipynb`): pool 1280 + 6 exports YOLO + COCO + máscaras FCN + recortes CAM, validado por round-trip
-- [x] **Cap. 5 — Modelado P0** (`04_modelado_p0.ipynb`): **11/11 experimentos DONE** — VGG y FCN en el carril Mac; los 5 Faster R-CNN en Colab A100 tras el veredicto del guardián de presupuesto
-- [x] **Cap. 6 — Modelado P1** (`05_modelado_p1_yolo.ipynb`): **8/8 experimentos DONE** — F1 en Mac; el resto en Colab A100 tras el bug intermitente de MPS; matriz 3×3 y los 4 análisis completos
-- [x] **Cap. 7 — Evaluación consolidada** (`06_evaluacion_consolidada.ipynb`): 19/19 consolidados; tabla maestra, matriz, fuga, ablación, A/B y TIDE (13 modelos) con figuras gemelas ES/EN
-- [x] **Cap. 8 — Entregables y demo**: papers **ES y EN** (5 pp, IEEE 2 columnas, 0 placeholders) · pósteres A0 **ES y EN** · demo por sesiones (`07_demo_inferencia.ipynb`) con collages, tiras comparativas y figura cualitativa en los papers · `dist/` empaquetado (1.30 GB pesos + 22 MB artefactos + 3 MB GT)
+- [x] **Cap. 1 - Adquisición** (`00_ingesta_descarga.ipynb`): 21 GB en `raw/`, verificados y descomprimidos a `bronze/`
+- [x] **Cap. 2 - EDA y auditoría** (`01_eda_bronze.ipynb`): 18.339 imágenes y 56.195 anotaciones caracterizadas; 6 decisiones de alcance tomadas
+- [x] **Cap. 3 - Curación → `silver`** (`02_curacion_silver.ipynb`): C1-C5 aplicadas, taxonomía A/B, 4 esquemas de split congelados y verificados
+- [x] **Cap. 4 - Export → `gold`** (`03_export_gold.ipynb`): pool 1280 + 6 exports YOLO + COCO + máscaras FCN + recortes CAM, validado por round-trip
+- [x] **Cap. 5 - Modelado P0** (`04_modelado_p0.ipynb`): **11/11 experimentos DONE** VGG y FCN en el carril Mac; los 5 Faster R-CNN en Colab A100 tras el veredicto del guardián de presupuesto
+- [x] **Cap. 6 - Modelado P1** (`05_modelado_p1_yolo.ipynb`): **8/8 experimentos DONE** F1 en Mac; el resto en Colab A100 tras el bug intermitente de MPS; matriz 3×3 y los 4 análisis completos
+- [x] **Cap. 7 - Evaluación consolidada** (`06_evaluacion_consolidada.ipynb`): 19/19 consolidados; tabla maestra, matriz, fuga, ablación, A/B y TIDE (13 modelos) con figuras gemelas ES/EN
+- [x] **Cap. 8 - Entregables y demo**: paper **EN** (6 pp, IEEE 2 columnas; versión interna en español) · póster **A0 EN** (versión interna en español) · demo por sesiones (`07_demo_inferencia.ipynb`) con collages, tiras comparativas y figura cualitativa en los papers · `dist/` empaquetado (1.30 GB pesos + 22 MB artefactos + 3 MB GT)
 - [ ] Publicar repo GitHub + Release (pesos + espejo Drive) y fijar `WEIGHTS_URL` en la 07
-- [ ] Video YouTube seccionado + presentación (15 min)
+- [ ] Presentación oral (15 min)
 
 Hilos externos: captura del set propio **Lima-OOD** (pendiente, protocolo en
 [protocolo_captura_lima.md](protocolo_captura_lima.md); las imágenes web de la demo se
@@ -39,7 +39,7 @@ enviado a los autores, sin respuesta al cierre).
 La acumulación de residuos en espacios públicos afecta salud, turismo y calidad de vida, y su
 monitoreo sigue siendo manual: costoso, lento y de cobertura limitada. La visión por computador
 permite automatizarlo, y la literatura reciente (WACV 2026) publicó en paralelo varios datasets
-del problema — pero cada uno vive en un *dominio* distinto: fotos de peatón, cámaras de
+del problema pero cada uno vive en un *dominio* distinto: fotos de peatón, cámaras de
 vehículo, drones. Ningún trabajo mide qué pasa al cruzarlos.
 
 ### Pregunta de investigación
@@ -49,7 +49,7 @@ vehículo, drones. Ningún trabajo mide qué pasa al cruzarlos.
 > la brecha: la arquitectura, la resolución de entrada, o un modelo fundacional *zero-shot*
 > frente al *fine-tuning*?
 
-El resultado principal es una **matriz de degradación cross-domain** — una cantidad relativa,
+El resultado principal es una **matriz de degradación cross-domain** una cantidad relativa,
 válida aunque los mAP absolutos sean bajos, que es lo esperable en este problema: TrashDet
 (WACV-W 2026), con búsqueda de arquitectura dedicada y 30.5 M de parámetros, alcanza solo
 19.5 mAP50 sobre un subconjunto de 5 clases de TACO.
@@ -103,7 +103,7 @@ code/
 
 ---
 
-## Capítulo 1 · Adquisición de datos — `00_ingesta_descarga.ipynb`
+## Capítulo 1 · Adquisición de datos - `00_ingesta_descarga.ipynb`
 
 ### Qué se descargó y por qué
 
@@ -162,7 +162,7 @@ cuatro datasets (1.500 · 11.564 · 772 · 4.503 + 4.503 máscaras).
 
 ---
 
-## Capítulo 2 · EDA y auditoría — `01_eda_bronze.ipynb`
+## Capítulo 2 · EDA y auditoría - `01_eda_bronze.ipynb`
 
 ### Método
 
@@ -182,7 +182,7 @@ el colorido (Hasler-Süsstrunk) y el PCA están implementados sobre numpy puro.
 ### Lo que muestran los datos
 
 **La escala del objeto es el eje que separa los dominios.** El objeto mediano de RoLID ocupa
-1 de cada 4.464 píxeles del frame — invisible a simple vista, aunque el 100 % de sus imágenes
+1 de cada 4.464 píxeles del frame invisible a simple vista, aunque el 100 % de sus imágenes
 está anotado:
 
 | Dataset | Lado mediano | % del área del frame | % objetos *small* (COCO) | Obj/img |
@@ -193,7 +193,7 @@ está anotado:
 
 **Integridad casi perfecta:** 1 sola anotación con defecto geométrico entre 56.195 (una caja
 23:1 en TACO). Cero imágenes corruptas. La distribución de tamaños de RoLID reproduce la
-Figura 4 de su paper dígito a dígito — prueba de que tenemos exactamente el release publicado.
+Figura 4 de su paper dígito a dígito prueba de que tenemos exactamente el release publicado.
 
 **La redundancia define cómo se puede partir la data:** pHash agrupa el **87 %** de RoLID en
 grupos de casi-duplicados (frames consecutivos de video; el mayor grupo: 7.345 imágenes),
@@ -207,10 +207,10 @@ TACO y UAVVaste se solapan (0.46). Anticipa dónde dolerá la transferencia.
 
 | # | Defecto | Evidencia | Corrección |
 |---|---|---|---|
-| H1 | **TACO: colisión de nombres entre batches** — `000006.jpg` existe en 9 batches; 1.386 de 1.500 imágenes comparten nombre base | conteo exhaustivo | toda identidad usa la ruta completa `batch_N/` + `img_uid` |
+| H1 | **TACO: colisión de nombres entre batches** `000006.jpg` existe en 9 batches; 1.386 de 1.500 imágenes comparten nombre base | conteo exhaustivo | toda identidad usa la ruta completa `batch_N/` + `img_uid` |
 | H2 | **TACO: rotación EXIF pendiente** en ~37 % de imágenes; las cajas están anotadas sobre la imagen ya girada | 200/200 imágenes coinciden con dims declaradas tras `exif_transpose` | todo dibujo aplica EXIF; gold materializa el pixel corregido |
-| H3 | **RoLID: la carpeta 0–23 no es la hora del día** — es índice de sesión (solo 64/11.564 coinciden con el timestamp real del nombre de archivo) | verificación contra timestamps | hora real y `video_id` se derivan del nombre |
-| H4 | **RoLID: fuga a nivel de video en los splits oficiales** — 22 de 84 videos reparten frames en más de un split; **58,2 % del test comparte video con train** | cruce video × split | doble evaluación: split oficial (comparable) + split por video (honesto) |
+| H3 | **RoLID: la carpeta 0–23 no es la hora del día** es índice de sesión (solo 64/11.564 coinciden con el timestamp real del nombre de archivo) | verificación contra timestamps | hora real y `video_id` se derivan del nombre |
+| H4 | **RoLID: fuga a nivel de video en los splits oficiales** 22 de 84 videos reparten frames en más de un split; **58,2 % del test comparte video con train** | cruce video × split | doble evaluación: split oficial (comparable) + split por video (honesto) |
 | H5 | RoLID: 1 imagen duplicada entre validation y test (ids 969/1520) + categoría fantasma `None` sin anotaciones | inspección de JSON | se retira de validation; `None` se elimina |
 
 H4 es el hallazgo mayor: frames consecutivos son casi idénticos, así que **los baselines
@@ -255,7 +255,7 @@ Figuras de referencia (se regeneran al ejecutar la notebook):
 
 ---
 
-## Capítulo 3 · Curación → `silver` — `02_curacion_silver.ipynb`
+## Capítulo 3 · Curación → `silver` - `02_curacion_silver.ipynb`
 
 ### Principios
 
@@ -265,7 +265,7 @@ Figuras de referencia (se regeneran al ejecutar la notebook):
 3. **Splits congelados y autoverificados**: la notebook corre una batería de aserciones
    duras antes de exportar; si una falla, no se escribe nada.
 
-### Correcciones aplicadas (C1–C5)
+### Correcciones aplicadas (C1-C5)
 
 La imagen duplicada de RoLID se retira de validation (queda en test), la categoría fantasma
 `None` desaparece, TACO queda identificado por ruta completa con su rotación EXIF registrada
@@ -274,15 +274,15 @@ los duplicados MD5 flagueados.
 
 ### Taxonomía de dos niveles, con variantes
 
-- **Nivel 1 · `litter`** — común a los tres datasets; habilita la matriz cross-domain.
-- **Nivel 2 · materiales (TACO)** — dos variantes que solo difieren en vidrio:
+- **Nivel 1 · `litter`** común a los tres datasets; habilita la matriz cross-domain.
+- **Nivel 2 · materiales (TACO)** dos variantes que solo difieren en vidrio:
   **A: 6 clases** (vidrio incluido, 38 instancias en test, declarado marginal) ·
   **B: 5 clases** (vidrio excluido). Gold exporta ambas y el modelado reporta las dos
   columnas: la comparación aísla exactamente el efecto de incluir una clase escasa.
 - Plegados declarados: espuma → plástico rígido (EPS es plástico); "otros" y
   `Unlabeled litter` fuera del nivel 2 (no constituyen un material), presentes en nivel 1.
 
-### Splits congelados — `silver/splits.csv`
+### Splits congelados - `silver/splits.csv`
 
 | Esquema | Unidad de grupo | Nota |
 |---|---|---|
@@ -293,7 +293,7 @@ los duplicados MD5 flagueados.
 
 ### Dos hallazgos de esta etapa
 
-**H6 — el split oficial de UAVVaste también tiene fuga**, en miniatura: la batería de
+**H6 - el split oficial de UAVVaste también tiene fuga**, en miniatura: la batería de
 validación detectó un par de frames consecutivos del mismo vuelo repartido entre train y
 test (`batch_s01_img_1060` / `img_1440`, pHash a 3 bits). Impacto despreciable, pero
 confirma el patrón: ningún release revisado parte por escena.
@@ -307,7 +307,7 @@ aserciones no son ceremonia: atraparon un defecto real antes de exportar.
 `silver/taxonomia.json` · `silver/splits.csv` (25.400 filas, 4 esquemas) ·
 `silver/_manifest.json` (conteos, semilla y SHA-256 de cada artefacto).
 
-## Capítulo 4 · Export → `gold` — `03_export_gold.ipynb`
+## Capítulo 4 · Export → `gold` - `03_export_gold.ipynb`
 
 La única capa derivable y desechable: se regenera entera desde silver + bronze. Materializa
 lo que consume cada modelo del portafolio:
@@ -323,8 +323,8 @@ lo que consume cada modelo del portafolio:
 
 Decisiones aplicadas: banderas de silver filtradas, **negativos envenenados excluidos con
 conteo por variante** (una imagen cuyo único contenido es de clases excluidas no puede
-entrenarse como fondo — la variante 5cls pierde además las imágenes solo-vidrio, y esa
-diferencia es parte de la comparativa A/B), nombres seguros `batch_N__archivo.jpg` (H1),
+entrenarse como fondo la variante 5cls pierde además las imágenes solo-vidrio, y esa
+diferencia es parte de la comparativa A/B), nombres seguros `batch_N_archivo.jpg` (H1),
 y verificación de linaje por SHA-256 contra el manifiesto de silver antes de construir.
 
 Validaciones automáticas: conteos contra `splits.csv`, **disjunción física** de splits
@@ -336,14 +336,14 @@ finales dibujados.
 uniforme entre datasets. TACO anota sobre la imagen ya girada por EXIF (H2), pero
 **UAVVaste contiene 5 fotos de mano/GoPro anotadas sobre el pixel crudo**
 (`camera_img_0/1/2`, `GOPR0047/0052`): aplicarles la rotación EXIF desalineaba sus cajas
-90°. La regla correcta es por imagen — materializar en el marco que coincide con las
-dimensiones declaradas — y el pool se guarda sin metadatos EXIF para que ningún framework
+90°. La regla correcta es por imagen materializar en el marco que coincide con las
+dimensiones declaradas y el pool se guarda sin metadatos EXIF para que ningún framework
 pueda re-rotar al cargar.
 
-## Capítulo 5 · Modelado P0 — `04_modelado_p0.ipynb`
+## Capítulo 5 · Modelado P0 - `04_modelado_p0.ipynb`
 
-Once experimentos alineados a las técnicas del curso: VGG-16 transfer (E1–E4, 2 estrategias
-× 2 lr), FCN-ResNet18 (D1–D2), Faster R-CNN R50-FPN (A1–A2 congelado/layer4, B6/B5
+Once experimentos alineados a las técnicas del curso: VGG-16 transfer (E1-E4, 2 estrategias
+× 2 lr), FCN-ResNet18 (D1-D2), Faster R-CNN R50-FPN (A1–A2 congelado/layer4, B6/B5
 multiclase, C dashcam), más el análisis de cobertura de anclas y los mapas de objectness
 del RPN.
 
@@ -358,11 +358,11 @@ base se sumaron tres guardianes nacidos de incidentes reales:
 | Guardián | Incidente que lo motivó |
 |---|---|
 | **NaN + cuarentena** | A1 divergió (lr 0.005 sin warmup) y registró 11 épocas NaN como si nada; la corrida quedó en `_cuarentena_*` y el reintento usó warmup lineal + `clip_grad_norm` + lr 0.001 |
-| **Presupuesto en horas** | un umbral ingenuo de "s/iter" — calibrado sin querer sobre iteraciones NaN, que son rápidas — marcó como lentos a todos los FRCNN sanos. Se reemplazó por una proyección de horas tras las primeras iteraciones medidas, contra `PRESUPUESTO_HORAS_EXP = 20` |
-| **Doble carril Mac/Colab** | el perfilado mostró la patología de fondo: MPS recompila kernels Metal por **cada forma de entrada** — y Faster R-CNN produce formas variables. Iteración sana: ~95 s en MPS contra ~0.3 s en CUDA |
+| **Presupuesto en horas** | un umbral ingenuo de "s/iter" calibrado sin querer sobre iteraciones NaN, que son rápidas marcó como lentos a todos los FRCNN sanos. Se reemplazó por una proyección de horas tras las primeras iteraciones medidas, contra `PRESUPUESTO_HORAS_EXP = 20` |
+| **Doble carril Mac/Colab** | el perfilado mostró la patología de fondo: MPS recompila kernels Metal por **cada forma de entrada** y Faster R-CNN produce formas variables. Iteración sana: ~95 s en MPS contra ~0.3 s en CUDA |
 
-El guardián de presupuesto emitió veredictos inapelables en la Mac — proyecciones de
-**315 h (A1) a 1.511 h (C)** — con el mensaje "mover este experimento al carril Colab".
+El guardián de presupuesto emitió veredictos inapelables en la Mac proyecciones de
+**315 h (A1) a 1.511 h (C)** con el mensaje "mover este experimento al carril Colab".
 Los cinco FRCNN se entrenaron en Colab (A100, ~5.3 unidades/h) escribiendo checkpoints
 directamente en Drive; los resultados se copiaron de vuelta y la notebook local consolidó.
 
@@ -376,7 +376,7 @@ directamente en Drive; los resultados se copiaron de vuelta y la notebook local 
 | B6 / B5 | FRCNN · 6cls / 5cls | 0.246 / 0.244 (empate en test) |
 | **C** | FRCNN · rolid por-video | **AP50 0.708** — val y test casi idénticos: el split por video generaliza limpio |
 
-## Capítulo 6 · Modelado P1 — `05_modelado_p1_yolo.ipynb`
+## Capítulo 6 · Modelado P1 - `05_modelado_p1_yolo.ipynb`
 
 Ocho YOLOv11n: F1–F4 por dominio @640, G1/G2 (6/5 clases), H1/H2 (@1024 para la ablación).
 La premisa "YOLO rinde en MPS porque sus entradas son fijas" resultó cierta a medias.
@@ -385,10 +385,10 @@ La premisa "YOLO rinde en MPS porque sus entradas son fijas" resultó cierta a m
 
 F1 (taco @640) entrenó completo en la Mac (0.541, 150 épocas). Pero un **bug intermitente
 del `TaskAlignedAssigner` de Ultralytics sobre MPS** ("shape mismatch... cannot be
-broadcast") tumbó F4 en la época 59, G1 en la 17 y G2 en la 31 — error no determinista,
+broadcast") tumbó F4 en la época 59, G1 en la 17 y G2 en la 31 error no determinista,
 imposible de atrapar sin parchear la librería. H1 (@1024) ni siquiera llegó a eso: el
 guardián de presupuesto proyectó ~25 h y lo expulsó. Decisión: detener el carril Mac y
-entrenar los 7 restantes en Colab A100 (CUDA es inmune al bug) — **todos cerraron limpios
+entrenar los 7 restantes en Colab A100 (CUDA es inmune al bug) **todos cerraron limpios
 en ~7.5 h de GPU**, con el runtime sobreviviendo incluso a una desconexión de la UI durante
 la noche.
 
@@ -397,7 +397,7 @@ la noche.
 Las celdas de análisis (matriz 3×3, fuga, ablación) corren inferencia local. Ahí apareció
 el tercer y más peligroso modo de fallo de MPS:
 
-1. **Lento** (recompilación por forma) — conocido desde P0.
+1. **Lento** (recompilación por forma) conocido desde P0.
 2. **Crash**: el driver Metal abortó el kernel de Python **dos veces**, con firma idéntica
    (`SIGABRT` en `_mps_convolution`), siempre al iniciar inferencia @1024 sobre RoLID.
 3. **Corrupción silenciosa**: la evaluación de H1→taco @1024 en MPS *terminó sin error*
@@ -406,7 +406,7 @@ el tercer y más peligroso modo de fallo de MPS:
    se regeneró por CPU: 0.474, coherente.
 
 Curas aplicadas: **caché idempotente de predicciones** (`preds_*.json` se escribe solo al
-completar una inferencia entera; un reintento rehace únicamente lo pendiente — el segundo
+completar una inferencia entera; un reintento rehace únicamente lo pendiente el segundo
 crash costó ~30 s en vez de 35 min) y **fallback a CPU para toda inferencia ≥1024 px bajo
 MPS**. La regla de sospecha quedó institucionalizada: *validar el volumen de predicciones,
 no solo la ausencia de excepciones*.
@@ -415,24 +415,24 @@ no solo la ausencia de excepciones*.
 
 F1 0.541 · F2 0.731 · F3 0.652 · F4 0.739 · G1 0.214 · G2 0.263 · H1 0.568 · **H2 0.797**.
 
-## Capítulo 7 · Evaluación consolidada — `06_evaluacion_consolidada.ipynb`
+## Capítulo 7 · Evaluación consolidada - `06_evaluacion_consolidada.ipynb`
 
 Una sola vara: los 19 experimentos evaluados con pycocotools contra los mismos GT congelados
-de gold; las tablas del paper salen de `reports/tablas/*.csv` — ningún número se transcribe
+de gold; las tablas del paper salen de `reports/tablas/*.csv` ningún número se transcribe
 a mano. Los cuatro hallazgos numéricos:
 
 | Hallazgo | Números |
 |---|---|
-| **Los detectores no viajan** | in-domain 0.639 AP50 medio → cruzado 0.118: **−82 %**. Dashcam es una isla (≤0.064 en ambas direcciones); mano→dron retiene el 68 % (0.527/0.779). La escala del objeto — no la apariencia — domina |
+| **Los detectores no viajan** | in-domain 0.639 AP50 medio → cruzado 0.118: **−82 %**. Dashcam es una isla (≤0.064 en ambas direcciones); mano→dron retiene el 68 % (0.527/0.779). La escala del objeto no la apariencia domina |
 | **La fuga infla +21 %** | sobre el mismo test por-video: el modelo entrenado con el split oficial (que vio esos videos) marca **0.844** contra **0.695** del entrenado limpio. Los baselines publicados de RoLID deben leerse con ese sesgo |
 | **La resolución paga donde duele** | 640→1024: dashcam **+8.3 AP50 / +5.8 AP-small**; mano +3.2 / +3.9 |
 | **El vidrio marginal cobra impuesto** | 5cls 0.192 vs 6cls 0.157 global; +0.014 medio en las clases compartidas (metal +0.077); vidrio solo llega a 0.049 |
 
 **TIDE también tuvo su defecto**: `tidecv` exige `segmentation` en cada anotación y los GT
-bbox-only (RoLID/UAV) no lo llevan — el `KeyError` descartaba la sección entera tras
+bbox-only (RoLID/UAV) no lo llevan el `KeyError` descartaba la sección entera tras
 procesar 4 modelos. Cura: copia temporal parcheada del GT (polígono = rectángulo del bbox,
 gold intacto) + guardián por modelo. Resultado: **13/13 detectores descompuestos**, con
-tres regímenes nítidos — multiclase dominado por clasificación (hasta 24.6 dAP), 1-clase
+tres regímenes nítidos multiclase dominado por clasificación (hasta 24.6 dAP), 1-clase
 mano repartido entre fondo y no-detectados, y dashcam in-domain casi sin Miss (≤3.9):
 los objetos de 22 px *sí se encuentran*; el colapso cross-domain nace de las
 representaciones.
@@ -442,13 +442,13 @@ Las cinco figuras clave se generan en **gemelas ES/EN** desde los mismos datos
 
 ## Capítulo 8 · Entregables y demo
 
-### Papers y pósteres (ES + EN)
+### Paper y póster (EN; versiones internas en español)
 
 Paper IEEE dos columnas, 5 páginas por idioma, abstract de 126 palabras, 5 tablas +
 figura TIDE + figura cualitativa de la demo, compilando sin errores ni desbordes.
 Pósteres A0 verticales (`tikzposter`) con la paleta del proyecto, iterados visualmente
 hasta encajar al milímetro (gotcha real: la fuente de versalitas del título no tiene el
-glifo "¿" — se generó rotando el "?").
+glifo "¿" se generó rotando el "?").
 
 ### La demo por sesiones (`07_demo_inferencia.ipynb`) y la lección de memoria unificada
 
@@ -456,10 +456,10 @@ La demo evolucionó de "una imagen a la vez" a **sesiones**: soltar imágenes en
 `demo/input/<nombre>/` (jpg/png/webp/**HEIC**/**AVIF**), Run All, y salen collages por
 modelo, **tiras comparativas por imagen** (Original con el origen del recorte Grad-CAM
 marcado en punteado · YOLO · FRCNN · FCN · Grad-CAM), indicadores, créditos extraídos de
-EXIF/XMP y `summary.csv` — todo persistido en `demo/output/<nombre>/`.
+EXIF/XMP y `summary.csv` todo persistido en `demo/output/<nombre>/`.
 
 El incidente que forjó su diseño final: la primera versión pasaba las N imágenes a Faster
-R-CNN **en un solo forward** — con 9 fotos, las activaciones del R50-FPN a 1280 px
+R-CNN **en un solo forward** con 9 fotos, las activaciones del R50-FPN a 1280 px
 (~2–4 GB por imagen) agotaron la memoria unificada del M5 Max y **reiniciaron la máquina**.
 Cura: inferencia imagen-por-imagen (memoria plana, sesiones de decenas de imágenes en
 cualquier máquina) + `free_memory()` al cerrar cada sección + el fallback CPU @1024
@@ -472,8 +472,8 @@ figura cualitativa de ambos papers; los créditos siguen la metadata donde exist
 
 ### Empaquetado
 
-`scripts/empaquetar_release.py` construye `dist/`: `weights_demo.zip` (1.30 GB — los 13
-detectores + mejor VGG y FCN), `experiments_artifacts.zip` (22 MB — métricas y
+`scripts/empaquetar_release.py` construye `dist/`: `weights_demo.zip` (1.30 GB - los 13
+detectores + mejor VGG y FCN), `experiments_artifacts.zip` (22 MB - métricas y
 predicciones de test de los 19), `gold_coco_gt.zip` (3 MB) y el manifiesto SHA-256.
 
 ## Capítulo 9 · Lecciones aprendidas
@@ -483,11 +483,11 @@ predicciones de test de los 19), `gold_coco_gt.zip` (3 MB) y el manifiesto SHA-2
 2. **Guardianes fail-fast > optimismo**: presupuesto en horas, NaN y cuarentena convirtieron
    noches de cómputo incierto en decisiones automáticas y auditables.
 3. **Una sola vara métrica**: evaluar P0 y P1 con el mismo pycocotools contra los mismos GT
-   fue lo que hizo comparables las tablas — y lo que permitió detectar números imposibles.
+   fue lo que hizo comparables las tablas y lo que permitió detectar números imposibles.
 4. **Idempotencia como seguro de vida**: DONE/FAILED, caché de predicciones y sesiones de
    demo sobrescribibles hicieron que cada crash costara minutos, no días.
-5. **MPS falla de tres maneras** — lento (recompilación por forma), crash (assert de Metal
-   @1024) y **corrupción silenciosa** — y la tercera solo se detecta validando el volumen
+5. **MPS falla de tres maneras** lento (recompilación por forma), crash (assert de Metal
+   @1024) y **corrupción silenciosa** y la tercera solo se detecta validando el volumen
    y la coherencia de las predicciones, nunca la ausencia de excepciones.
 6. **La memoria unificada de Apple Silicon no perdona lotes grandes**: un batch de
    detección a 1280 px puede tumbar el sistema entero; secuencial + liberación explícita
@@ -534,7 +534,7 @@ de la ruta completa, con los carriles que realmente se usaron:
 | Paso | Notebook | Nota |
 |---|---|---|
 | 1 · Descarga + bronze | `00_ingesta_descarga.ipynb` | reanudable e idempotente; ~20 min con buena conexión |
-| 2 · EDA | `01_eda_bronze.ipynb` | escaneo inicial 3–8 min (M-series); reejecuciones usan caché parquet |
+| 2 · EDA | `01_eda_bronze.ipynb` | escaneo inicial 3-8 min (M-series); reejecuciones usan caché parquet |
 | 3 · Curación | `02_curacion_silver.ipynb` | ~1 min; aserciones duras antes de exportar |
 | 4 · Gold | `03_export_gold.ipynb` | ~10 min; `PAQUETE_COLAB_P0/P1` para el carril nube |
 | 5 · Modelado P0 | `04_modelado_p0.ipynb` | Mac: VGG/FCN (~3 h) · Colab A100: los 5 FRCNN (~2.5 h GPU); reanudable por época |
@@ -542,7 +542,7 @@ de la ruta completa, con los carriles que realmente se usaron:
 | 7 · Consolidación | `06_evaluacion_consolidada.ipynb` | ~2 min; produce `reports/tablas/` y `reports/figuras_final/` (incluye gemelas EN) |
 | 8 · Demo | `07_demo_inferencia.ipynb` | sesiones en `demo/input/<nombre>/`; CPU suficiente; ~20 s por imagen |
 
-Regla de operación en todas: **Run All siempre** — los marcadores DONE, la cuarentena, la
+Regla de operación en todas: **Run All siempre** los marcadores DONE, la cuarentena, la
 caché de predicciones y los checkpoints se encargan de ejecutar solo lo pendiente.
 
 Los datasets no se versionan en el repo: la notebook 00 los descarga de sus fuentes oficiales

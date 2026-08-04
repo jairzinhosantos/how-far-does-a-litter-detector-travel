@@ -27,8 +27,10 @@ Cross-Domain Urban Waste Detection Across Handheld, Dashcam and Drone Imagery}
 
 \author{
 \IEEEauthorblockN{Jairzinho Santos}
-\IEEEauthorblockA{Universidad Nacional de Ingenier\'ia, Lima, Peru\\
-Computer Vision --- MSc in Artificial Intelligence, 2026-I}}
+\IEEEauthorblockA{Universidad Nacional de Ingenier\'ia \\
+Lima, Peru \\
+Computer Vision, MSc in Artificial Intelligence \\
+2026-I}}
 
 \maketitle
 
@@ -37,8 +39,8 @@ Computer Vision --- MSc in Artificial Intelligence, 2026-I}}
 % <= 150 words
 Automated litter monitoring is usually evaluated within a single imaging domain,
 yet real deployments mix handheld reports, vehicle cameras and drones. We study
-how much urban waste detectors degrade across three public domains---TACO
-(handheld), RoLID-11K (dashcam) and UAVVaste (drone)---under a single audited
+how much urban waste detectors degrade across three public domains TACO
+(handheld), RoLID-11K (dashcam) and UAVVaste (drone) under a single audited
 evaluation protocol. Our curation uncovered seven defects in the released
 datasets, most notably video-level leakage in RoLID-11K's official splits, where
 58.2\% of test images share a source video with training; a model trained with
@@ -64,11 +66,11 @@ handheld photographs (TACO~\cite{taco}), forward-facing dashcams
 (RoLID-11K~\cite{rolid}), drone imagery (UAVVaste~\cite{uavvaste}) and waste-truck
 fisheye cameras (StreetView-Waste~\cite{streetview}). Each benchmark, however, is
 evaluated \emph{in-domain}; whether a detector trained on one viewpoint remains
-useful on another---the situation any city deploying mixed sensors faces---has
+useful on another the situation any city deploying mixed sensors faces has
 not been measured.
 
 This paper asks: \emph{how much does urban litter detection degrade across
-imaging domains, and what matters most to close the gap---architecture, input
+imaging domains, and what matters most to close the gap architecture, input
 resolution, or training data hygiene?} Answering it required more than training
 detectors. Auditing the three datasets surfaced seven defects (Section~\ref{sec:data}),
 including video-level leakage in RoLID-11K's official splits that inflates
@@ -100,7 +102,7 @@ Detect-waste~\cite{detectwaste} harmonized several of these sources; ZeroWaste~\
 addresses industrial sorting, a domain we deliberately exclude.
 
 \textbf{Detection under constraints.} TrashDet~\cite{trashdet} searches TinyML
-detectors on TACO, reaching 19.5 mAP$_{50}$ on a five-class subset---evidence that
+detectors on TACO, reaching 19.5 mAP$_{50}$ on a five-class subset evidence that
 absolute scores in this problem are structurally low, which motivates our focus on
 \emph{relative} cross-domain quantities. RoLID's authors benchmark modern
 detectors, with transformer heads (CO-DETR) leading YOLO variants by over
@@ -132,10 +134,10 @@ flow, from verified ingestion to the evaluation contract.
 \node[caja, fill=black!4] (src) {Public sources\\Zenodo · Drive · GitHub};
 \node[caja, fill=black!4, right=of src] (raw) {\textbf{raw}\\immutable · MD5};
 \node[caja, fill=black!4, right=of raw] (bronze) {\textbf{bronze}\\browsable};
-\node[caja, fill=blue!6, right=of bronze] (silver) {\textbf{silver}\\audit H1--H7 · fixes C1--C5\\frozen group-aware splits};
+\node[caja, fill=blue!6, right=of bronze] (silver) {\textbf{silver}\\audit H1-H7 · fixes C1-C5\\frozen group-aware splits};
 \node[caja, fill=orange!10, right=of silver] (gold) {\textbf{gold}\\pools 1280 · YOLO dirs\\COCO GTs · masks · crops};
-\node[caja, fill=blue!6, below=8mm of bronze] (mac) {\textbf{Mac lane} (MPS)\\VGG E1--E4 · FCN D1--D2\\YOLO F1};
-\node[caja, fill=blue!6, right=of mac] (colab) {\textbf{Colab lane} (A100)\\Faster R-CNN A/B/C\\YOLO F2--F4, G, H};
+\node[caja, fill=blue!6, below=8mm of bronze] (mac) {\textbf{Mac lane} (MPS)\\VGG E1-E4 · FCN D1-D2\\YOLO F1};
+\node[caja, fill=blue!6, right=of mac] (colab) {\textbf{Colab lane} (A100)\\Faster R-CNN A/B/C\\YOLO F2-F4, G, H};
 \node[caja, fill=green!7, right=of colab] (eval) {\textbf{evaluation contract}\\pycocotools vs.\ frozen GTs\\TIDE decomposition};
 \node[caja, fill=green!7, right=of eval] (res) {\textbf{19 runs DONE}\\matrix · leakage\\ablation · 6-vs-5};
 \draw[fl] (src) -- node[et, above]{00} (raw);
@@ -193,21 +195,21 @@ filename with another batch); (H2) $\sim$37\% of TACO images carry pending EXIF
 rotations, with boxes annotated on the \emph{rotated} frame; (H3) RoLID's release
 folders do not encode capture hour; (H4) \textbf{RoLID's official splits leak at
 the video level}: 22 of 84 source videos span multiple splits and 58.2\% of test
-frames share a video with training---near-duplicate frames (87\% visual
+frames share a video with training near-duplicate frames (87\% visual
 redundancy by perceptual hash) make this scene leakage, inflating published
 baselines; (H5) one image is duplicated between official val and test; (H6)
 UAVVaste's official split also contains one near-duplicate pair across
-train/test; (H7) annotation frames are inconsistent across datasets---TACO
+train/test; (H7) annotation frames are inconsistent across datasets TACO
 annotates on the EXIF-rotated frame while five UAVVaste handheld photos annotate
-the raw frame---so pixels are materialized per-image in the frame that matches
+the raw frame so pixels are materialized per-image in the frame that matches
 the declared dimensions, with EXIF metadata stripped.
 
 \textbf{Curation.} Silver applies five corrections (duplicate removal from val,
 phantom-category removal, full-path identity, degenerate-box and MD5 flags),
-defines a two-level taxonomy---\emph{litter} (1 class, all datasets) and TACO
+defines a two-level taxonomy \emph{litter} (1 class, all datasets) and TACO
 material classes in two parallel variants, \textbf{A: 6 classes} (glass included,
 marginal at 38 projected test instances) and \textbf{B: 5 classes} (glass
-excluded)---and freezes four split schemes with group-aware units: pHash visual
+excluded) and freezes four split schemes with group-aware units: pHash visual
 groups for TACO/UAVVaste and \emph{source video} for RoLID. TACO splits use
 iterative stratification~\cite{sechidis}; every class lands within 0.1\,pp of the
 15\% test target. For RoLID we keep \emph{both} the official (leaky, for
@@ -218,9 +220,9 @@ quantification of the inflation.
 \section{Methods}
 \label{sec:methods}
 
-\textbf{P0 --- fine-tuned classical pipeline.}
+\textbf{P0 - fine-tuned classical pipeline.}
 (1)~\emph{Faster R-CNN} (ResNet-50-FPN, COCO-pretrained) under two transfer
-strategies---frozen backbone vs.\ unfreezing \texttt{layer4}---with linear warmup,
+strategies frozen backbone vs.\ unfreezing \texttt{layer4} with linear warmup,
 gradient clipping and early stopping on validation AP$_{50}$.
 (2)~\emph{FCN-ResNet18} for binary litter/background segmentation on TACO's
 rasterized polygons ($1\times1$ conv + $\times$32 transposed conv with bilinear
@@ -229,11 +231,11 @@ init, class-weighted cross-entropy).
 strategies $\times$ two learning rates), providing the substrate for
 CAM~\cite{cam}, Grad-CAM~\cite{gradcam} and Guided Backpropagation~\cite{guidedbp}
 interpretability panels.
-(4)~An \emph{anchor-coverage analysis}: FPN base anchors (32--512 px) against the
+(4)~An \emph{anchor-coverage analysis}: FPN base anchors (32-512 px) against the
 measured object-size distributions, plus RPN objectness maps from the trained
-dashcam model---a mechanistic account of the small-object gap.
+dashcam model a mechanistic account of the small-object gap.
 
-\textbf{P1 --- modern reference.} YOLOv11n~\cite{yolo11} trained per domain at
+\textbf{P1 - modern reference.} YOLOv11n~\cite{yolo11} trained per domain at
 640 px (and 1024 px for the resolution ablation), used to fill the $3\times3$
 cross-domain matrix, the official-vs-by-video leakage pair, and the 6-vs-5-class
 variant comparison.
@@ -247,11 +249,11 @@ predictions feed TIDE~\cite{tide} error decomposition.
 \section{Experimental Setup}
 Nineteen runs (11 P0, 8 P1) executed on two lanes: Apple M-series (MPS) for
 VGG/FCN/YOLO and CUDA (Colab A100) for Faster R-CNN and the heavier YOLO
-runs---profiling showed healthy Faster R-CNN iterations cost $\sim$95\,s on MPS
+runs profiling showed healthy Faster R-CNN iterations cost $\sim$95\,s on MPS
 (variable input shapes force per-shape kernel recompilation), versus
 $\sim$0.3\,s on CUDA; an hour-budget guardian projected total cost after the
 first epoch and routed unviable runs automatically. Budgets: generous epoch caps
-(50--150) with early stopping (patience 8--30) and validation curves; seeds
+(50-150) with early stopping (patience 8-30) and validation curves; seeds
 fixed; per-epoch checkpoints with resume. Images are materialized at max side
 1280 (Lanczos, JPEG q95) in the annotation frame (H7). Figure~\ref{fig:curves} shows the validation trajectories of the eight
 YOLO runs: clean convergence, early stopping at work, and the separation
@@ -265,8 +267,8 @@ by domain and resolution.
 \end{figure}
 
 Multiclass exports
-exclude \emph{poisoned negatives}---images whose only objects belong to excluded
-classes---rather than training them as background (1/38/60 images for the
+exclude \emph{poisoned negatives} images whose only objects belong to excluded
+classes rather than training them as background (1/38/60 images for the
 1/6/5-class variants).
 
 % =============================================================
@@ -279,13 +281,13 @@ transcribed by hand.
 \subsection{Cross-domain matrix}
 Figure~\ref{fig:matrix} presents the central result. In-domain, the three
 YOLOv11n models average 0.639 AP$_{50}$; across domains this collapses to
-0.118---an \textbf{82\% degradation}. The matrix is strongly asymmetric: the
+0.118 an \textbf{82\% degradation}. The matrix is strongly asymmetric: the
 dashcam domain is an island (AP$_{50}\!\le\!0.064$ in either direction), while
 handheld$\rightarrow$drone transfers surprisingly well (0.527, retaining 68\% of
 the drone in-domain score). This pattern indicts \emph{object scale} rather than
 appearance alone: TACO and UAVVaste objects (median 171 and 72\,px) both lie
 within the FPN anchor range, whereas RoLID's 22-px median falls below the
-smallest 32-px anchor---consistent with our anchor-coverage analysis and with
+smallest 32-px anchor consistent with our anchor-coverage analysis and with
 AP$_S$ collapsing hardest (diagonal AP$_S$: 0.056 / 0.279 / 0.374).
 
 \begin{figure}[t]
@@ -300,7 +302,7 @@ In-domain mean 0.639 vs.\ cross-domain 0.118.}
 \subsection{Leakage inflation in RoLID-11K}
 Table~\ref{tab:leak} pairs the official (58\% video leakage) and by-video (0\%)
 protocols. On the \emph{same} clean by-video test set, the model trained on the
-official split---which saw other frames of those very test videos---scores
+official split which saw other frames of those very test videos scores
 0.844 AP$_{50}$ versus 0.695 for the cleanly trained model: a \textbf{+21\%
 relative inflation} attributable to scene memorization, not generalization
 (87\% of intra-video frame pairs are visually redundant by perceptual hash).
@@ -326,9 +328,9 @@ official (58\% leak) & by-video & \textbf{0.844} \\
 \subsection{Families under the same protocol}
 Table~\ref{tab:families} compares Faster R-CNN (41.3\,M parameters) and
 YOLOv11n (2.6\,M) on identical splits and ground truths. On single-class tasks
-the 16$\times$ smaller model stays within 1--4 AP$_{50}$ points (0.695 vs.\
+the 16$\times$ smaller model stays within 1-4 AP$_{50}$ points (0.695 vs.\
 0.707 on dashcam; 0.442 vs.\ 0.483 on handheld), supporting lightweight
-deployment; on material classification the gap widens to 5--9 points.
+deployment; on material classification the gap widens to 5-9 points.
 Unfreezing \texttt{layer4} lifts Faster R-CNN by +3.7 AP$_{50}$ over the frozen
 backbone (0.483 vs.\ 0.446). Our 5-class YOLO (0.192 mAP$_{50}$) is consistent
 with TrashDet's 19.5 on a comparable TACO subset~\cite{trashdet}, confirming
@@ -364,10 +366,10 @@ Data & Model & AP$_{50}$ & AP & AP$_S$ \\
  & YOLOv11n & 0.695 & \textbf{0.279} & 0.279 \\
 \midrule
 \multirow{2}{*}{TACO 6-cls} & FRCNN & \textbf{0.246} & 0.154 & 0.029 \\
- & YOLOv11n & 0.157 & -- & -- \\
+ & YOLOv11n & 0.157 & - & - \\
 \midrule
 \multirow{2}{*}{TACO 5-cls} & FRCNN & \textbf{0.244} & 0.155 & 0.024 \\
- & YOLOv11n & 0.192 & -- & -- \\
+ & YOLOv11n & 0.192 & - & - \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -375,7 +377,7 @@ Data & Model & AP$_{50}$ & AP & AP$_S$ \\
 \subsection{Resolution and class granularity}
 Table~\ref{tab:res} shows the 640$\rightarrow$1024 ablation. Gains concentrate
 exactly where objects are smallest: +8.3 AP$_{50}$ and +5.8 AP$_S$ on dashcam,
-versus +3.2 and +3.9 on handheld---resolution is the cheapest effective lever
+versus +3.2 and +3.9 on handheld resolution is the cheapest effective lever
 for the small-object regime. For class granularity, excluding the marginal
 glass class (38 test instances, AP$_{50}$ 0.049 when kept) improves the global
 5-class score to 0.192 vs.\ 0.157 for 6 classes, with a mean +0.014 AP$_{50}$
@@ -402,12 +404,12 @@ RoLID & 0.695 & \textbf{0.779} & 0.279 & \textbf{0.337} \\
 Figure~\ref{fig:tide} decomposes the error with TIDE across all 13 detectors.
 Three regimes emerge. Multiclass models are dominated by \emph{classification}
 error (up to 24.6 dAP in the 5-class YOLO, against only 1.7 for localization):
-finding litter is not the bottleneck---naming its material is. Single-class
+finding litter is not the bottleneck naming its material is. Single-class
 handheld models split their error between background false positives and
-missed objects ($\sim$11--13 dAP each). In-domain dashcam models,
+missed objects ($\sim$11-13 dAP each). In-domain dashcam models,
 counter-intuitively, miss little (dAP$_{\text{Miss}}\!\le\!3.9$): the 22-px
 objects \emph{are} found, and the residual error is dominated by background
-confusions---evidence that the cross-domain collapse of Figure~\ref{fig:matrix}
+confusions evidence that the cross-domain collapse of Figure~\ref{fig:matrix}
 stems from representations, not from an unrecoverable recall floor.
 
 \begin{figure}[t]
@@ -424,7 +426,7 @@ images downloaded from the internet, unrelated to the three datasets. Under
 conservative thresholds (0.25 for YOLO, 0.5 for Faster R-CNN), the quantitative
 patterns reappear out of distribution: Faster R-CNN proposes more candidates
 than YOLOv11n on all ten images (211 vs.\ 87 detections in total; 45 vs.\ 15 on
-the densest scene), the FCN estimates 3--16\% litter pixels per scene, and the
+the densest scene), the FCN estimates 3-16\% litter pixels per scene, and the
 VGG classifier confirms every crop with P(litter)$\ge$0.99, Grad-CAM attending
 to the object rather than its context. These images are illustrative evidence,
 not a metric: they carry no annotations.
@@ -448,8 +450,8 @@ The 82\% cross-domain drop, with dashcam isolated and handheld$\leftrightarrow$
 drone partially compatible, is explained primarily by object scale: domains
 whose object sizes fall within the pretraining anchor range exchange some
 knowledge; the 22-px dashcam regime exchanges none. For municipal deployments
-mixing sensors, per-domain fine-tuning---or at minimum resolution
-adaptation---remains mandatory; a single universal litter model is not yet
+mixing sensors, per-domain fine-tuning or at minimum resolution
+adaptation remains mandatory; a single universal litter model is not yet
 realistic. \textbf{Split hygiene changes conclusions.} The official RoLID
 protocol rewards scene memorization (+21\% AP$_{50}$); results published on it
 are optimistic by roughly that margin, and the fix (group-aware, by-video
@@ -458,34 +460,34 @@ structure should ship group identifiers. \textbf{The cheap levers work.}
 1024-px input buys back +8.3 AP$_{50}$ on dashcam; a 2.6\,M-parameter detector
 performs within a few points of a 41.3\,M one on single-class litter detection;
 and TIDE locates the multiclass bottleneck in material classification rather
-than localization---suggesting a decoupled design (class-agnostic detector plus
+than localization suggesting a decoupled design (class-agnostic detector plus
 crop classifier, where our VGG substrate reaches 97.8\% accuracy) over ever
 finer detection heads.
 Limitations we can already state: absolute mAP in this problem is structurally
 low~\cite{trashdet}; our compute budget precluded transformer detectors
 (CO-DETR-class) which lead RoLID's in-domain benchmark; StreetView-Waste could
 not be included (endpoints unavailable); our own OOD capture (Lima) remains
-future work, as does temporal aggregation over dashcam video---natural given the
+future work, as does temporal aggregation over dashcam video natural given the
 video-level structure our audit exposed.
 
 % =============================================================
 \section{Conclusion}
 We audited three public litter datasets, released corrected group-aware splits,
-and measured---under a single evaluation contract---how far litter detectors
+and measured under a single evaluation contract how far litter detectors
 travel across handheld, dashcam and drone imagery. The answers are concrete: an
 82\% mAP$_{50}$ drop out of domain with dashcam fully isolated; a +21\%
 AP$_{50}$ inflation hiding in RoLID-11K's official splits; up to +8.3
 AP$_{50}$ recoverable by input resolution alone; and a 16$\times$ smaller
 modern detector within a few points of Faster R-CNN on single-class litter.
 Error decomposition shows the remaining battles are background discrimination
-and material classification, not localization. The full pipeline---from
-checksummed ingestion to generated tables---plus weights and a live demo are
+and material classification, not localization. The full pipeline from
+checksummed ingestion to generated tables plus weights and a live demo are
 public; transformer detectors, temporal aggregation over dashcam video and our
 planned Lima out-of-distribution capture are the natural next steps.
 
 \section*{Reproducibility}
-Code, notebooks (ingest to evaluation), audited splits, trained weights and a
-sectioned demo video are released; three reproduction routes are documented (demo
+Code, notebooks (ingest to evaluation), audited splits and trained weights
+are released; three reproduction routes are documented (demo
 with pretrained weights, metric regeneration from released artifacts in
 $\sim$10 minutes, and full retraining from public data). Datasets are downloaded
 from their official sources with checksum verification.

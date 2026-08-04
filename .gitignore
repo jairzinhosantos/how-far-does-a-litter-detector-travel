@@ -26,3 +26,7 @@ __pycache__/
 *.synctex.gz
 reports/paper/*.log
 reports/poster/*.log
+
+# versiones en espanol del paper y poster: solo internas
+reports/paper/main_es.*
+reports/poster/poster_es.*

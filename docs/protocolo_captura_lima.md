@@ -1,9 +1,9 @@
-# Protocolo de captura — Lima-OOD
+# Protocolo de captura - Lima-OOD
 
 Conjunto de prueba *out-of-distribution* propio: residuos urbanos en calles de Lima.
 Sirve para medir la **brecha de dominio Europa → Perú**, que es la contribución original del proyecto.
 
-**Equipo:** iPhone 17 Pro Max · **Meta:** 100–150 fotos · **Mínimo útil: 80.**
+**Equipo:** iPhone 17 Pro Max · **Meta:** 100-150 fotos · **Mínimo útil: 80.**
 
 > Menos fotos no invalida nada. Con 80 imágenes ya se puede reportar una brecha de dominio
 > con intervalos de confianza por bootstrap. **Prioriza diversidad sobre cantidad.**
@@ -17,7 +17,7 @@ Sirve para medir la **brecha de dominio Europa → Perú**, que es la contribuci
 | Ajuste | Valor | Por qué |
 |---|---|---|
 | **Formatos → Captura de fotos** | **Más compatible (JPEG)** | HEIC obliga a un paso de conversión y algunas librerías de CV lo leen mal |
-| **Formatos → Modo de foto** | **24 MP** (no 48 MP) | Todo se reescala a 640–1280 px para entrenar. 48 MP cuadruplica el peso sin ganancia |
+| **Formatos → Modo de foto** | **24 MP** (no 48 MP) | Todo se reescala a 640-1280 px para entrenar. 48 MP cuadruplica el peso sin ganancia |
 | **Formatos → Apple ProRAW** | **OFF** | ~75 MB por foto, cero beneficio aquí |
 | **Formatos → Fotos en vivo** | **OFF** | Genera un `.MOV` emparejado por foto y ensucia la ingesta |
 | **Corrección de lente** | **ON** | Reduce distorsión de barril |
@@ -50,7 +50,7 @@ El geotag EXIF es valioso: permite agrupar fotos por ubicación para el *split g
 
 ## 2 · Guion de captura
 
-### Mezcla de distancias — *lo más importante del protocolo*
+### Mezcla de distancias - *lo más importante del protocolo*
 
 | Proporción | Distancia | Cómo se ve | Para qué |
 |---|---|---|---|
@@ -62,12 +62,12 @@ Si se sacrifica algo, que sea la categoría "cerca". **La de "lejos" es la que a
 
 ### Altura y ángulo
 
-- Cámara a la **altura del pecho o de los ojos** (1.4–1.7 m).
+- Cámara a la **altura del pecho o de los ojos** (1.4-1.7 m).
 - Inclinada hacia abajo **entre 30° y 60°**.
 - **No cenital** (eso es el dominio del dron, ya cubierto por UAVVaste).
 - **No horizontal puro** (el suelo casi no aparece).
 
-### Ejes de diversidad — variar deliberadamente
+### Ejes de diversidad - variar deliberadamente
 
 | Eje | Variantes a cubrir |
 |---|---|
@@ -75,23 +75,23 @@ Si se sacrifica algo, que sea la categoría "cerca". **La de "lejos" es la que a
 | **Iluminación** | Mañana · mediodía (sombras duras) · tarde · sol directo · sombra · día nublado |
 | **Densidad** | Objeto aislado · 2–5 objetos dispersos · acumulación / montículo |
 | **Material** | Plástico (botella, bolsa, envoltorio) · papel/cartón · metal (lata) · vidrio · orgánico · **colillas** |
-| **Zona** | Al menos **3 barrios o zonas distintas** — sin esto el split por ubicación no funciona |
+| **Zona** | Al menos **3 barrios o zonas distintas** sin esto el split por ubicación no funciona |
 
 > Las **colillas** son el caso más difícil y el más citado en la literatura. Vale la pena buscarlas a propósito.
 
-### Negativos — **no omitir**
+### Negativos - **no omitir**
 
-**10–15 % de las fotos (≈ 15–20) deben ser escenas de calle limpias, sin ningún residuo.**
+**10–15 % de las fotos (≈ 15-20) deben ser escenas de calle limpias, sin ningún residuo.**
 
 Se olvida casi siempre y es imprescindible: sin negativos no se pueden medir falsos positivos
 y la tasa de FP es justamente donde los modelos de basura fallan más. Mismos encuadres, mismas
-superficies, misma iluminación — pero sin basura.
+superficies, misma iluminación pero sin basura.
 
 ### Qué NO hacer
 
 | Evitar | Por qué |
 |---|---|
-| 5 fotos casi idénticas de la misma escena | Fuga entre train y test. Si tomas 2–3 de una escena, muévete y cambia el ángulo notoriamente |
+| 5 fotos casi idénticas de la misma escena | Fuga entre train y test. Si tomas 2-3 de una escena, muévete y cambia el ángulo notoriamente |
 | Poner o mover la basura para que se vea mejor | Deja de ser *in the wild*, que es todo el punto |
 | Rostros identificables o placas de vehículos | Problema de privacidad al publicar. Reencuadrar o evitar |
 | Solo la zona más sucia de un solo barrio | Sin diversidad espacial no hay split válido |
@@ -120,7 +120,7 @@ No hace falta llevar bitácora en campo.
 
 ### Volumen esperado
 
-24 MP JPEG ≈ 3–5 MB por foto → **150 fotos ≈ 600 MB.** Irrelevante frente a los 214 GB libres.
+24 MP JPEG ≈ 3-5 MB por foto → **150 fotos ≈ 600 MB.** Irrelevante frente a los 214 GB libres.
 
 ### Anotación (fase posterior)
 
