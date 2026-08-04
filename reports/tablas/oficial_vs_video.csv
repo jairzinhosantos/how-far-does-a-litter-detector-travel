@@ -1,0 +1,4 @@
+,modelo,test,AP50,AP
+oficial (58% fuga),F3,oficial,0.6201,0.2297
+por video (0% fuga),F2,video,0.6954,0.2788
+F3 evaluado sin fuga,F3,video,0.8439,0.3716

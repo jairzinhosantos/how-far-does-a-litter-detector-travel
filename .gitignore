@@ -1,0 +1,28 @@
+# datos (regenerables con la notebook 00; regla del curso: no adjuntar datasets)
+data/
+
+# pesos, checkpoints y corridas (viven en los Release assets)
+experiments/
+
+# assets del release (se suben al Release, no al repo)
+dist/
+
+# imagenes de demo (terceros) y sus salidas
+demo/
+
+# entornos y cache
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+
+# sistema
+.DS_Store
+
+# LaTeX intermedios
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+reports/paper/*.log
+reports/poster/*.log

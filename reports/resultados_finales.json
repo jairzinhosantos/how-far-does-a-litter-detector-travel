@@ -1,0 +1,661 @@
+{
+  "generado": "2026-08-03T15:39:33",
+  "experimentos_done": 19,
+  "de": 19,
+  "maestra": [
+    {
+      "fase": "P0",
+      "exp": "E1",
+      "familia": "VGG",
+      "tarea": "clasificación",
+      "datos": "crops/masks",
+      "detalle": "congelado",
+      "epocas": 15,
+      "tiempo_min": 30.7,
+      "val": 0.9699349338,
+      "metrica_val": "val_acc",
+      "test_acc": 0.9711901223,
+      "test_iou_litter": null,
+      "test_ap50": null,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P0",
+      "exp": "E2",
+      "familia": "VGG",
+      "tarea": "clasificación",
+      "datos": "crops/masks",
+      "detalle": "congelado",
+      "epocas": 30,
+      "tiempo_min": 61.2,
+      "val": 0.9716176801,
+      "metrica_val": "val_acc",
+      "test_acc": 0.9713044472,
+      "test_iou_litter": null,
+      "test_ap50": null,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P0",
+      "exp": "E3",
+      "familia": "VGG",
+      "tarea": "clasificación",
+      "datos": "crops/masks",
+      "detalle": "ultimo_bloque",
+      "epocas": 15,
+      "tiempo_min": 35.4,
+      "val": 0.9687009199,
+      "metrica_val": "val_acc",
+      "test_acc": 0.9737052704,
+      "test_iou_litter": null,
+      "test_ap50": null,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P0",
+      "exp": "E4",
+      "familia": "VGG",
+      "tarea": "clasificación",
+      "datos": "crops/masks",
+      "detalle": "ultimo_bloque",
+      "epocas": 22,
+      "tiempo_min": 52.0,
+      "val": 0.9771146511,
+      "metrica_val": "val_acc",
+      "test_acc": 0.9781639419,
+      "test_iou_litter": null,
+      "test_ap50": null,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P0",
+      "exp": "D1",
+      "familia": "FCN",
+      "tarea": "segmentación",
+      "datos": "crops/masks",
+      "detalle": 0.001,
+      "epocas": 68,
+      "tiempo_min": 7.3,
+      "val": 0.549831327,
+      "metrica_val": "val_iou",
+      "test_acc": null,
+      "test_iou_litter": 0.5766410169,
+      "test_ap50": null,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P0",
+      "exp": "D2",
+      "familia": "FCN",
+      "tarea": "segmentación",
+      "datos": "crops/masks",
+      "detalle": 0.0001,
+      "epocas": 70,
+      "tiempo_min": 7.5,
+      "val": 0.4690480789,
+      "metrica_val": "val_iou",
+      "test_acc": null,
+      "test_iou_litter": 0.5357029623,
+      "test_ap50": null,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P0",
+      "exp": "A1",
+      "familia": "FRCNN",
+      "tarea": "detección",
+      "datos": "taco_1cls",
+      "detalle": "congelado",
+      "epocas": 26,
+      "tiempo_min": 19.7,
+      "val": 0.5328630271,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.4460448341,
+      "test_ap": 0.300622856,
+      "test_ap_s": 0.0585346523
+    },
+    {
+      "fase": "P0",
+      "exp": "A2",
+      "familia": "FRCNN",
+      "tarea": "detección",
+      "datos": "taco_1cls",
+      "detalle": "layer4",
+      "epocas": 18,
+      "tiempo_min": 14.0,
+      "val": 0.5419886728,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.4825652965,
+      "test_ap": 0.323124022,
+      "test_ap_s": 0.0729193416
+    },
+    {
+      "fase": "P0",
+      "exp": "B6",
+      "familia": "FRCNN",
+      "tarea": "detección",
+      "datos": "taco_6cls",
+      "detalle": "layer4",
+      "epocas": 25,
+      "tiempo_min": 18.9,
+      "val": 0.2489918061,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.2457064077,
+      "test_ap": 0.1535560444,
+      "test_ap_s": 0.0286275139
+    },
+    {
+      "fase": "P0",
+      "exp": "B5",
+      "familia": "FRCNN",
+      "tarea": "detección",
+      "datos": "taco_5cls",
+      "detalle": "layer4",
+      "epocas": 23,
+      "tiempo_min": 17.2,
+      "val": 0.282800556,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.2441490666,
+      "test_ap": 0.1554918436,
+      "test_ap_s": 0.0244746247
+    },
+    {
+      "fase": "P0",
+      "exp": "C",
+      "familia": "FRCNN",
+      "tarea": "detección",
+      "datos": "rolid_video_1cls",
+      "detalle": "layer4",
+      "epocas": 14,
+      "tiempo_min": 67.1,
+      "val": 0.7079273537,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.7074953516,
+      "test_ap": 0.2766705373,
+      "test_ap_s": 0.281171041
+    },
+    {
+      "fase": "P1",
+      "exp": "F1",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "taco_1cls",
+      "detalle": "@640",
+      "epocas": 150,
+      "tiempo_min": 138.4,
+      "val": 0.54053,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.441845332,
+      "test_ap": 0.3177949305,
+      "test_ap_s": 0.0563377796
+    },
+    {
+      "fase": "P1",
+      "exp": "F2",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "rolid_video_1cls",
+      "detalle": "@640",
+      "epocas": 93,
+      "tiempo_min": 104.0,
+      "val": 0.73115,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.6953694685,
+      "test_ap": 0.2788391951,
+      "test_ap_s": 0.2789293816
+    },
+    {
+      "fase": "P1",
+      "exp": "F3",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "rolid_oficial_1cls",
+      "detalle": "@640",
+      "epocas": 94,
+      "tiempo_min": 107.9,
+      "val": 0.65224,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.6201,
+      "test_ap": 0.2297,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P1",
+      "exp": "F4",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "uav_1cls",
+      "detalle": "@640",
+      "epocas": 150,
+      "tiempo_min": 9.9,
+      "val": 0.73896,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.7792209783,
+      "test_ap": 0.4570148038,
+      "test_ap_s": 0.3744411335
+    },
+    {
+      "fase": "P1",
+      "exp": "G1",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "taco_6cls",
+      "detalle": "@640",
+      "epocas": 93,
+      "tiempo_min": 13.6,
+      "val": 0.21409,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.1565902418,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P1",
+      "exp": "G2",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "taco_5cls",
+      "detalle": "@640",
+      "epocas": 148,
+      "tiempo_min": 21.1,
+      "val": 0.26308,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.1921777945,
+      "test_ap": null,
+      "test_ap_s": null
+    },
+    {
+      "fase": "P1",
+      "exp": "H1",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "taco_1cls",
+      "detalle": "@1024",
+      "epocas": 133,
+      "tiempo_min": 44.9,
+      "val": 0.56842,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.4735,
+      "test_ap": null,
+      "test_ap_s": 0.0957
+    },
+    {
+      "fase": "P1",
+      "exp": "H2",
+      "familia": "YOLO",
+      "tarea": "detección",
+      "datos": "rolid_video_1cls",
+      "detalle": "@1024",
+      "epocas": 76,
+      "tiempo_min": 170.2,
+      "val": 0.7969,
+      "metrica_val": "val_ap50",
+      "test_acc": null,
+      "test_iou_litter": null,
+      "test_ap50": 0.7787,
+      "test_ap": null,
+      "test_ap_s": 0.3371
+    }
+  ],
+  "matriz_cross_domain": {
+    "taco->taco": {
+      "ap50": 0.4418453320401657,
+      "ap": 0.31779493045866025,
+      "ap_s": 0.05633777960514531,
+      "ap_m": 0.32986951915758783,
+      "ap_l": 0.598805042737957,
+      "por_clase_ap50": {
+        "litter": 0.4418453320401657
+      }
+    },
+    "taco->rolid": {
+      "ap50": 0.001953740571068273,
+      "ap": 0.0005066697686981908,
+      "ap_s": 0.0007464338053315066,
+      "ap_m": 0.0008886216321613149,
+      "ap_l": 0.0009917688981444508,
+      "por_clase_ap50": {
+        "litter": 0.001953740571068273
+      }
+    },
+    "taco->uav": {
+      "ap50": 0.5266442375755815,
+      "ap": 0.2835480217099951,
+      "ap_s": 0.1893123616877025,
+      "ap_m": 0.4479578669629085,
+      "ap_l": 0.3527227722772277,
+      "por_clase_ap50": {
+        "litter": 0.5266442375755815
+      }
+    },
+    "rolid->taco": {
+      "ap50": 0.0010322533051602128,
+      "ap": 0.0003121501411248171,
+      "ap_s": 2.5121447238651243e-05,
+      "ap_m": 0.00158181603417893,
+      "ap_l": 0.0,
+      "por_clase_ap50": {
+        "litter": 0.0010322533051602128
+      }
+    },
+    "rolid->rolid": {
+      "ap50": 0.6953694684778347,
+      "ap": 0.27883919513355176,
+      "ap_s": 0.27892938155755964,
+      "ap_m": 0.27399904588502433,
+      "ap_l": 0.15445544554455445,
+      "por_clase_ap50": {
+        "litter": 0.6953694684778347
+      }
+    },
+    "rolid->uav": {
+      "ap50": 0.0635375604711089,
+      "ap": 0.02479636879930727,
+      "ap_s": 0.014009164587759781,
+      "ap_m": 0.06858564861792461,
+      "ap_l": 0.0,
+      "por_clase_ap50": {
+        "litter": 0.0635375604711089
+      }
+    },
+    "uav->taco": {
+      "ap50": 0.10598391190184497,
+      "ap": 0.06235258702774283,
+      "ap_s": 0.02735688256486952,
+      "ap_m": 0.12010869734800922,
+      "ap_l": 0.07068897442309846,
+      "por_clase_ap50": {
+        "litter": 0.10598391190184497
+      }
+    },
+    "uav->rolid": {
+      "ap50": 0.0060387638773701,
+      "ap": 0.001761334969535304,
+      "ap_s": 0.002573713698176262,
+      "ap_m": 0.0010001483740360668,
+      "ap_l": 0.000313933832407631,
+      "por_clase_ap50": {
+        "litter": 0.0060387638773701
+      }
+    },
+    "uav->uav": {
+      "ap50": 0.7792209783095725,
+      "ap": 0.45701480376495646,
+      "ap_s": 0.37444113351439207,
+      "ap_m": 0.6055659506653037,
+      "ap_l": 0.4168316831683168,
+      "por_clase_ap50": {
+        "litter": 0.7792209783095725
+      }
+    }
+  },
+  "oficial_vs_video": {
+    "oficial (58% fuga)": {
+      "modelo": "F3",
+      "test": "oficial",
+      "AP50": 0.6201,
+      "AP": 0.2297
+    },
+    "por video (0% fuga)": {
+      "modelo": "F2",
+      "test": "video",
+      "AP50": 0.6954,
+      "AP": 0.2788
+    },
+    "F3 evaluado sin fuga": {
+      "modelo": "F3",
+      "test": "video",
+      "AP50": 0.8439,
+      "AP": 0.3716
+    }
+  },
+  "ablacion_resolucion": {
+    "taco": {
+      "AP50@640": 0.4418,
+      "AP50@1024": 0.4735,
+      "AP_s@640": 0.0563,
+      "AP_s@1024": 0.0957,
+      "ganancia_AP_s": 0.0394
+    },
+    "rolid": {
+      "AP50@640": 0.6954,
+      "AP50@1024": 0.7787,
+      "AP_s@640": 0.2789,
+      "AP_s@1024": 0.3371,
+      "ganancia_AP_s": 0.0582
+    }
+  },
+  "variantes_ab": {
+    "cigarrillo": {
+      "A_6cls": 0.0762,
+      "B_5cls": 0.0814
+    },
+    "metal": {
+      "A_6cls": 0.174,
+      "B_5cls": 0.2509
+    },
+    "papel_carton": {
+      "A_6cls": 0.1749,
+      "B_5cls": 0.1987
+    },
+    "plastico_flexible": {
+      "A_6cls": 0.2214,
+      "B_5cls": 0.2221
+    },
+    "plastico_rigido": {
+      "A_6cls": 0.2444,
+      "B_5cls": 0.2078
+    },
+    "vidrio": {
+      "A_6cls": 0.0486,
+      "B_5cls": null
+    },
+    "_global": {
+      "A_6cls": 0.1565902418,
+      "B_5cls": 0.1921777945
+    }
+  },
+  "tide_modelos": [
+    "P0-FRCNN-A1",
+    "P0-FRCNN-A2",
+    "P0-FRCNN-B5",
+    "P0-FRCNN-B6",
+    "P0-FRCNN-C",
+    "P1-YOLO-F1",
+    "P1-YOLO-F2",
+    "P1-YOLO-F3",
+    "P1-YOLO-F4",
+    "P1-YOLO-G1",
+    "P1-YOLO-G2",
+    "P1-YOLO-H1",
+    "P1-YOLO-H2"
+  ],
+  "tide_errores": [
+    {
+      "modelo": "P0-FRCNN-A1",
+      "AP50": 44.6,
+      "Cls": 0.0,
+      "Loc": 4.21,
+      "Both": 0.0,
+      "Dupe": 0.07,
+      "Bkg": 12.47,
+      "Miss": 12.66,
+      "FalsePos": 24.7,
+      "FalseNeg": 19.49
+    },
+    {
+      "modelo": "P0-FRCNN-A2",
+      "AP50": 48.26,
+      "Cls": 0.0,
+      "Loc": 4.72,
+      "Both": 0.0,
+      "Dupe": 0.1,
+      "Bkg": 10.76,
+      "Miss": 14.81,
+      "FalsePos": 19.07,
+      "FalseNeg": 22.62
+    },
+    {
+      "modelo": "P0-FRCNN-B6",
+      "AP50": 24.57,
+      "Cls": 12.67,
+      "Loc": 1.99,
+      "Both": 0.45,
+      "Dupe": 0.07,
+      "Bkg": 5.89,
+      "Miss": 10.66,
+      "FalsePos": 29.72,
+      "FalseNeg": 17.69
+    },
+    {
+      "modelo": "P0-FRCNN-B5",
+      "AP50": 24.41,
+      "Cls": 11.09,
+      "Loc": 2.94,
+      "Both": 0.38,
+      "Dupe": 0.08,
+      "Bkg": 7.92,
+      "Miss": 7.81,
+      "FalsePos": 32.61,
+      "FalseNeg": 14.65
+    },
+    {
+      "modelo": "P0-FRCNN-C",
+      "AP50": 70.75,
+      "Cls": 0.0,
+      "Loc": 7.58,
+      "Both": 0.0,
+      "Dupe": 0.21,
+      "Bkg": 9.64,
+      "Miss": 3.72,
+      "FalsePos": 17.37,
+      "FalseNeg": 8.85
+    },
+    {
+      "modelo": "P1-YOLO-F1",
+      "AP50": 44.18,
+      "Cls": 0.0,
+      "Loc": 5.49,
+      "Both": 0.0,
+      "Dupe": 0.3,
+      "Bkg": 11.13,
+      "Miss": 12.25,
+      "FalsePos": 23.14,
+      "FalseNeg": 21.15
+    },
+    {
+      "modelo": "P1-YOLO-F2",
+      "AP50": 69.54,
+      "Cls": 0.0,
+      "Loc": 7.73,
+      "Both": 0.0,
+      "Dupe": 0.73,
+      "Bkg": 7.89,
+      "Miss": 3.86,
+      "FalsePos": 17.59,
+      "FalseNeg": 10.15
+    },
+    {
+      "modelo": "P1-YOLO-F3",
+      "AP50": 62.01,
+      "Cls": 0.0,
+      "Loc": 9.51,
+      "Both": 0.0,
+      "Dupe": 0.75,
+      "Bkg": 9.36,
+      "Miss": 5.04,
+      "FalsePos": 21.16,
+      "FalseNeg": 12.42
+    },
+    {
+      "modelo": "P1-YOLO-F4",
+      "AP50": 77.92,
+      "Cls": 0.0,
+      "Loc": 6.27,
+      "Both": 0.0,
+      "Dupe": 0.36,
+      "Bkg": 4.14,
+      "Miss": 5.87,
+      "FalsePos": 8.22,
+      "FalseNeg": 12.48
+    },
+    {
+      "modelo": "P1-YOLO-G1",
+      "AP50": 15.67,
+      "Cls": 23.02,
+      "Loc": 1.7,
+      "Both": 0.48,
+      "Dupe": 0.04,
+      "Bkg": 4.15,
+      "Miss": 4.95,
+      "FalsePos": 23.44,
+      "FalseNeg": 21.38
+    },
+    {
+      "modelo": "P1-YOLO-G2",
+      "AP50": 19.2,
+      "Cls": 24.58,
+      "Loc": 1.69,
+      "Both": 0.29,
+      "Dupe": 0.07,
+      "Bkg": 5.95,
+      "Miss": 5.37,
+      "FalsePos": 24.96,
+      "FalseNeg": 22.96
+    },
+    {
+      "modelo": "P1-YOLO-H1",
+      "AP50": 47.35,
+      "Cls": 0.0,
+      "Loc": 3.42,
+      "Both": 0.0,
+      "Dupe": 0.29,
+      "Bkg": 14.13,
+      "Miss": 10.03,
+      "FalsePos": 26.91,
+      "FalseNeg": 16.11
+    },
+    {
+      "modelo": "P1-YOLO-H2",
+      "AP50": 77.87,
+      "Cls": 0.0,
+      "Loc": 5.3,
+      "Both": 0.0,
+      "Dupe": 0.41,
+      "Bkg": 6.89,
+      "Miss": 3.4,
+      "FalsePos": 13.22,
+      "FalseNeg": 7.36
+    }
+  ]
+}
