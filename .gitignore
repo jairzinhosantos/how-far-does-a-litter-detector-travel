@@ -30,3 +30,7 @@ reports/poster/*.log
 # versiones en espanol del paper y poster: solo internas
 reports/paper/main_es.*
 reports/poster/poster_es.*
+
+# assets derivados de imagenes web de la demo (regenerables: notebook 07 + scripts/figuras_paper.py)
+reports/presentacion/assets/*
+!reports/presentacion/assets/uni_logo.png
