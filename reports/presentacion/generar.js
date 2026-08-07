@@ -214,9 +214,9 @@ Fíjense en el patrón: cada dataset se publica, se entrena y se evalúa dentro 
 {
   const s = L("Los tres dominios que sí pude usar", "El problema",
     "Mismo objeto —basura en vía pública— visto desde tres alturas y tres cámaras distintas.");
-  const doms = [["dominio_taco.png", "TACO · mano", "1 500 imágenes", "objeto mediano 171 px", AZUL],
-                ["dominio_rolid.png", "RoLID-11K · dashcam", "11 564 imágenes", "objeto mediano 22 px", AMBAR],
-                ["dominio_uav.png", "UAVVaste · dron", "772 imágenes", "objeto mediano 72 px", VERDE]];
+  const doms = [["dominio_taco.png", "TACO · mano", "1 500 imágenes", "objeto mediano 171 px*", AZUL],
+                ["dominio_rolid.png", "RoLID-11K · dashcam", "11 564 imágenes", "objeto mediano 22 px*", AMBAR],
+                ["dominio_uav.png", "UAVVaste · dron", "772 imágenes", "objeto mediano 72 px*", VERDE]];
   for (let i = 0; i < 3; i++) {
     const [img, tit, n, med, c] = doms[i];
     const x = 0.62 + i * 4.18;
@@ -230,6 +230,7 @@ Fíjense en el patrón: cada dataset se publica, se entrena y se evalúa dentro 
   s.addText([{ text: "La diferencia clave no es el color ni el fondo: es el tamaño con que aparece el objeto. ", options: { bold: true, color: INK } },
              { text: "De 22 a 171 píxeles hay casi un orden de magnitud.", options: { color: GRIS } }],
     { x: 0.62, y: 6.2, w: 12.1, h: 0.5, fontFace: F, fontSize: 14, margin: 0 });
+  pie(s, "* Medido sobre la imagen original de cada dataset. A la resolución con la que se entrena (640 px) esos tamaños se reducen a ~32, ~7 y ~12 px respectivamente — la cuenta está en la lámina de configuración experimental.");
   s.addNotes(`[03:00 – 03:45]  [ANCLA]
 
 De esos cuatro, pude trabajar con tres. Y aquí está el dato que va a gobernar todo el trabajo.
@@ -428,8 +429,8 @@ Entonces conservo ese cuerpo y reemplazo solo la cabeza: un clasificador nuevo q
     fontFace: F, fontSize: 11, italic: true, color: GRIS2, margin: 0 });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.62, y: 5.42, w: 12.1, h: 0.95,
     fill: { color: "FDECEA" }, line: { color: ROJO, width: 1.6 }, rectRadius: 0.05 });
-  s.addText([{ text: "El objeto mediano de dashcam mide 22 px: ", options: { bold: true, color: ROJO } },
-             { text: "queda por debajo de la ancla más pequeña. El detector, literalmente, no tiene una caja de referencia de ese tamaño. Este mecanismo explica el resultado principal del trabajo.", options: { color: INK } }],
+  s.addText([{ text: "El objeto mediano de dashcam queda en ~7 px a la resolución de entrada: ", options: { bold: true, color: ROJO } },
+             { text: "casi 5× por debajo de la ancla más pequeña. El detector, literalmente, no tiene una caja de referencia de ese tamaño. Este mecanismo explica el resultado principal del trabajo.", options: { color: INK } }],
     { x: 0.95, y: 5.6, w: 11.5, h: 0.65, fontFace: F, fontSize: 13, margin: 0 });
   s.addText([{ text: "Y la red aprende dos cosas a la vez  →   ", options: { bold: true, color: INK } },
              { text: "L = L", options: { color: GRIS } }, { text: "clasificación", options: { color: GRIS, fontSize: 9 } },
@@ -444,7 +445,7 @@ Un detector no busca objetos libremente por la imagen. Recorre la imagen con caj
 
 En la arquitectura que uso, esas anclas tienen cinco escalas: 32, 64, 128, 256 y 512 píxeles al cuadrado, cada una con tres proporciones de aspecto. La más pequeña es la de 32 píxeles.
 
-Y aquí está el punto: el objeto mediano de dashcam mide 22 píxeles. Queda por debajo de la ancla más pequeña. El detector, literalmente, no tiene una caja de referencia de ese tamaño. Esto va a explicar por qué el dominio dashcam se comporta como una isla.
+Y aquí está el punto. El objeto mediano de dashcam mide 22 píxeles en la imagen original, pero el modelo no ve esa imagen: ve la versión reescalada a la resolución de entrada. A 640 píxeles, ese objeto queda en unos siete. Casi cinco veces por debajo de la ancla más pequeña. El detector, literalmente, no tiene una caja de referencia de ese tamaño. Esto va a explicar por qué el dominio dashcam se comporta como una isla. En la lámina de configuración experimental hago la cuenta para los tres dominios.
 
 Una nota adicional: la red aprende dos cosas a la vez, y eso se ve en la función de pérdida — un término de clasificación, qué es, más un término de caja, dónde está exactamente, ponderados por lambda.`);
 }
@@ -1003,17 +1004,31 @@ Por eso todas las decisiones de este trabajo se tomaron mirando validación, y e
       bold: true, color: INK, margin: 0 });
     lista(s, items, x + 0.26, y + 0.58, 5.42, 1.55, 11);
   });
-  s.addNotes(`[21:15 – 21:50]  [PASO larga]
+  s.addNotes(`[21:15 – 22:10]  [ANCLA]
 
-Segunda parte del setup: el entrenamiento.
+Segunda parte del setup: el entrenamiento. Quiero detenerme sobre todo en el bloque de la resolución, porque conecta directamente con el resultado principal.
 
 Para la estabilidad uso warmup lineal —la tasa de aprendizaje arranca baja y sube gradualmente— y recorte de gradiente. Las dos medidas no son decorativas: vienen de un problema real, una corrida que divergió y registró once épocas en NaN.
 
 Para detener: tope de cincuenta a ciento cincuenta épocas según el experimento, con early stopping si la validación no mejora, y un checkpoint por época que permite reanudar.
 
-Las imágenes se materializan a 1 280 píxeles de lado máximo y se entrena a 640, o a 1 024 para la ablación de resolución, con aumentación estándar.
+Ahora la resolución, que tiene tres niveles y conviene distinguirlos.
 
-Y reproducibilidad: semilla fija, registro por corrida, todo publicado.`);
+El primero: materializo todas las imágenes a 1 280 píxeles de lado máximo. ¿Por qué? Porque los tres datasets vienen con tamaños muy distintos —TACO ronda los 3 264 píxeles de lado, RoLID son 1 920, UAVVaste llega a 3 668—. Fijar un tamaño común hace tres cosas: homogeneiza el punto de partida, hace el reescalado una sola vez y con buena calidad en lugar de repetirlo en cada época, y baja el pool de sesenta gigas a cuatro.
+
+El segundo: entreno a 640 píxeles. Es el estándar de la familia YOLO y el equilibrio habitual entre velocidad y precisión.
+
+Y el tercero: repito dos experimentos a 1 024 píxeles. Esa es la ablación de resolución.
+
+Ahora la parte importante, que es cómo se conecta esto con los 22 píxeles de los que vengo hablando. Ese número está medido sobre la imagen original de dashcam, que tiene 1 920 píxeles de lado. Pero el modelo no ve esa imagen: ve la versión reescalada. Cuando entreno a 640 píxeles, ese objeto de 22 se reduce a unos siete píxeles. Siete.
+
+Y el ancla más pequeña del detector mide 32. O sea que a la resolución real de entrenamiento, el objeto de dashcam no está apenas por debajo del ancla: está casi cinco veces por debajo.
+
+Hagamos la misma cuenta para los otros dos dominios, porque ahí está la explicación de la matriz. TACO: 171 píxeles en la original, que a 640 quedan en unos 32 — es decir, justo en el ancla mínima. UAVVaste: 72 en la original, unos 12 a 640. Y RoLID: siete.
+
+Ese es el orden que va a reaparecer en los resultados. TACO entra cómodo en el rango que el detector sabe mirar, UAVVaste queda en el borde, y RoLID queda fuera. Y por eso subir a 1 024 píxeles ayuda: no resuelve el problema —el objeto de dashcam pasa de siete a once píxeles, sigue por debajo del ancla— pero recupera casi la mitad del terreno perdido, y eso se traduce en los ocho puntos de mejora que voy a mostrar.
+
+Cierro con reproducibilidad: semilla fija, registro por corrida, todo publicado.`);
 }
 {
   const s = L("Los 19 experimentos", "El desarrollo",
@@ -1297,7 +1312,7 @@ Ahora sí, los números.`);
     s.addText(d, { x: 6.3, y: y + 0.31, w: 6.4, h: 0.45, fontFace: F, fontSize: 11.5,
       color: GRIS, margin: 0 });
   });
-  s.addText("La causa: TACO (171 px) y UAVVaste (72 px) caen dentro del rango de anclas; RoLID (22 px) queda por debajo de todas.",
+  s.addText("La causa: a 640 px de entrada, TACO queda en ~32 px (justo en el ancla mínima) y UAVVaste en ~12; RoLID, en ~7.",
     { x: 6.3, y: 6.7, w: 6.4, h: 0.45, fontFace: F, fontSize: 11, italic: true, color: GRANATE, margin: 0 });
   s.addNotes(`[26:00 – 26:55]  [ANCLA]
 
@@ -1309,7 +1324,7 @@ Dashcam es una isla: no supera 0.064 en ninguna dirección. Ni recibe conocimien
 
 En cambio, el modelo entrenado con fotos de mano evaluado sobre imágenes de dron logra 0.527, que es el 68 % de lo que logra el modelo entrenado específicamente con dron. Transfiere bastante bien.
 
-¿Por qué esa diferencia? Volvamos a las anclas. TACO tiene objetos de 171 píxeles y UAVVaste de 72: los dos caen dentro del rango de anclas del preentrenamiento. RoLID, con 22 píxeles, queda debajo de todas.
+¿Por qué esa diferencia? Volvamos a las anclas, con las cuentas del setup. A la resolución de entrada de 640 píxeles, los objetos de TACO quedan en unos 32 —justo en el ancla mínima— y los de UAVVaste en unos 12. Los de RoLID, en siete. TACO y UAVVaste están dentro o en el borde del rango que el detector sabe mirar; RoLID está muy fuera. Por eso esos dos se transfieren algo entre sí y dashcam no se comunica con ninguno.
 
 O sea: lo que separa a los dominios no es principalmente la apariencia, es la escala del objeto. Y eso responde la primera parte de la pregunta.`);
 }
@@ -1350,7 +1365,7 @@ Y lo importante para la comunidad: corregirlo no cuesta nada, solo cambiar cómo
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.62, y: 5.55, w: 12.1, h: 1.15,
     fill: { color: BG_SUAVE }, line: { color: GRANATE, width: 1.5 }, rectRadius: 0.05 });
   s.addText([{ text: "Por qué funciona:  ", options: { bold: true, color: GRANATE } },
-             { text: "al duplicar la resolución, un objeto que medía 22 px pasa a medir 35 y entra en el rango de la ancla más pequeña (32 px). Es exactamente lo que predecía el mecanismo que expliqué al inicio: no cambié el modelo, solo le di una imagen donde el objeto cabe en su caja de referencia.", options: { color: INK } }],
+             { text: "a 640 px de entrada el objeto mediano de dashcam queda en unos 7 px, casi 5× por debajo del ancla más pequeña (32 px); a 1 024 px sube a unos 11. Sigue por debajo, pero recupera terreno — y esa recuperación parcial ya vale 8.3 puntos. No cambié el modelo: solo acerqué el objeto al tamaño que el detector sabe mirar.", options: { color: INK } }],
     { x: 0.95, y: 5.75, w: 11.5, h: 0.8, fontFace: F, fontSize: 12.5, margin: 0 });
   s.addNotes(`[27:50 – 28:30]  [ANCLA]
 
@@ -1360,9 +1375,9 @@ El experimento es limpio: mismo modelo, mismos datos, mismo protocolo. Lo único
 
 En dashcam, la ganancia es de 8.3 puntos de AP50 y 5.8 de AP-small. En mano, de 3.2 y 3.9. La ganancia se concentra donde los objetos son más pequeños.
 
-¿Por qué funciona? Al duplicar la resolución, un objeto que medía 22 píxeles pasa a medir 35, y entra en el rango de la ancla más pequeña, que es de 32. Es exactamente lo que predecía el mecanismo que expliqué al inicio.
+¿Por qué funciona? Recuerden la cuenta del setup: a 640 píxeles de entrada, el objeto mediano de dashcam queda en unos siete píxeles, casi cinco veces por debajo del ancla más pequeña. Al subir a 1 024 sube a unos once. Sigue estando por debajo, pero recupera parte del terreno, y esa recuperación parcial ya vale 8.3 puntos.
 
-No cambié el modelo. Solo le di una imagen donde el objeto cabe en su caja de referencia. Por eso digo que es la palanca más barata del problema.`);
+No cambié el modelo: solo acerqué el objeto al tamaño que el detector sabe mirar. Por eso digo que es la palanca más barata del problema — y también por qué no basta: aun a 1 024 píxeles el objeto sigue por debajo del ancla mínima.`);
 }
 {
   const s = L("Un modelo 16 veces más pequeño compite de igual a igual", "Resultados · hallazgo 4a",
