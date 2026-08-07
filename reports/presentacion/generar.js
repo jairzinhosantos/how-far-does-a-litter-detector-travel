@@ -1054,17 +1054,34 @@ Y reproducibilidad: semilla fija, registro por corrida, todo publicado.`);
     s.addText(t, { x: x + 0.04, y: 6.44, w: 1.49, h: 0.4, fontFace: F, fontSize: 8.5,
       color: GRANATE, align: "center", margin: 0 });
   });
-  s.addNotes(`[21:50 – 22:40]  [ANCLA]
+  s.addNotes(`[21:50 – 24:20]  [ANCLA — la más larga del bloque; hay versión corta al final]
 
-Estos son los diecinueve experimentos, ya con los códigos que expliqué al inicio.
+Estos son los diecinueve experimentos, ya con los códigos que expliqué al inicio. Pero más que la lista, quiero explicar la lógica: cada grupo está diseñado para aislar una sola variable, de modo que la diferencia entre dos corridas se pueda atribuir a esa variable y no a otra cosa.
 
-Cuatro VGG: E1 a E4, combinando dos estrategias de congelamiento con dos tasas de aprendizaje. Dos FCN: D1 y D2, con distintas tasas.
+Empiezo por los cuatro VGG, porque ahí el diseño es un factorial de dos por dos y se entiende bien.
 
-Cinco Faster R-CNN: A1 y A2 comparan cuerpo congelado contra abrir la última capa; B6 y B5 comparan seis clases de material contra cinco; y C entrena sobre dashcam.
+La primera variable es el congelamiento. Cuando uso una red preentrenada tengo dos opciones. La primera es congelar el cuerpo: dejo fijas todas las capas convolucionales y entreno solo la cabeza clasificadora nueva. La segunda es descongelar el último bloque convolucional y dejar que también se ajuste.
 
-Ocho YOLO: F1 a F4 cubren los cuatro dominios; G1 y G2 repiten la comparación de clases; y H1 y H2 son los mismos datos a mayor resolución.
+¿Por qué esa elección importa? Porque las capas de una red no aprenden lo mismo. Las primeras detectan bordes, texturas y colores: eso es universal, sirve igual para un perro que para una botella, y no vale la pena reentrenarlo. Las últimas capas, en cambio, codifican características ya específicas del dominio en que se entrenó —ImageNet, en este caso—. Descongelar solo ese último bloque permite adaptar lo específico sin tocar lo universal. Y no descongelo todo por una razón concreta: con mil quinientas imágenes, ajustar 138 millones de parámetros sobreajustaría casi con seguridad.
 
-Cada grupo está diseñado para aislar una variable. Y de los diecinueve salen los cuatro análisis que responden la pregunta.`);
+La segunda variable es la tasa de aprendizaje, y en transferencia es más delicada de lo que parece. Un valor alto sobre pesos preentrenados los destruye: la red olvida lo que ya sabía antes de aprender lo nuevo. Un valor bajo los ajusta con cuidado, pero si es demasiado bajo la cabeza nueva —que arranca inicializada al azar— tarda muchísimo en converger. Por eso probé 0.001 y 0.0001.
+
+Y el resultado confirma exactamente esa teoría. La mejor combinación fue E4: descongelar el último bloque con la tasa baja, 97.8 % de exactitud. Y la peor en validación fue E3: descongelar con la tasa alta, 96.9 %. Es decir, descongelar ayuda solo si además bajo la tasa; si descongelo y mantengo la tasa alta, daño los pesos preentrenados y pierdo. Los factores interactúan, y por eso hay que probarlos en cruz y no de a uno.
+
+En el FCN, D1 y D2, pasa lo contrario: gana la tasa alta, 0.577 contra 0.536 de IoU. Y tiene sentido, porque ahí la cabeza nueva no es un clasificador pequeño: es una convolución más una capa transpuesta que reconstruye la máscara completa. Tiene mucho más que aprender desde cero, así que agradece una tasa mayor.
+
+En Faster R-CNN, A1 y A2 repiten la comparación de congelamiento sobre detección: descongelar la última etapa del cuerpo dio 0.483 contra 0.446, casi cuatro puntos de mejora. Consistente con lo que vimos en clasificación.
+
+Los demás grupos aíslan variables de datos, no de entrenamiento: B6 contra B5 cambia solo la taxonomía —seis clases de material o cinco—; C entrena sobre dashcam para tener el par de comparación con YOLO; F1 a F4 cubren los cuatro dominios y alimentan la matriz cross-domain; G1 y G2 repiten la comparación de clases en la otra familia; y H1 y H2 son exactamente los mismos datos que F1 y F2 pero a 1 024 píxeles, que es la ablación de resolución.
+
+————————————————————————————————
+VERSIÓN CORTA (≈45 s, si vas con prisa):
+
+Diecinueve experimentos, y cada grupo aísla una sola variable.
+
+Los cuatro VGG son un factorial de dos por dos: congelar el cuerpo o descongelar el último bloque, con tasa de aprendizaje alta o baja. Ganó descongelar con tasa baja, y perdió descongelar con tasa alta: los pesos preentrenados se dañan si el paso es grande. Los factores interactúan.
+
+En Faster R-CNN, A1 contra A2 repite esa comparación y descongelar gana casi cuatro puntos. Los demás grupos aíslan variables de datos: taxonomía, dominio y resolución.`);
 }
 {
   const s = L("Por qué hubo que usar dos computadoras distintas", "El desarrollo · cómputo",
