@@ -14,7 +14,7 @@ const LOGO_AR = 1200 / 1509;
 const GRANATE = "800404", GRANATE_CLARO = "A63A3A";
 const AZUL = "3B6FD4", ROJO = "D64A3F", AMBAR = "E9A825", VERDE = "2E9E5B";
 const AZUL_S = "8AB4F8", MORADO = "9B72CF";
-const INK = "202124", GRIS = "5F6368", GRIS2 = "9AA0A6";
+const INK = "202124", GRIS = "5F6368", GRIS2 = "9AA0A6", REJILLA = "E8EAED";
 const BG = "FFFFFF", BG_SUAVE = "F8F9FA";
 const F = "Calibri";
 
@@ -1531,57 +1531,247 @@ Como trabajo futuro: transformers, agregación temporal sobre el video de dashca
 }
 
 // ═══ 8 · DEMO ════════════════════════════════════════════════════════════════
-Sec("08", "Demostración en vivo", "El sistema completo, ejecutándose con imágenes que nunca vio")
-  .addNotes(`[32:55 – 33:00]  [PASO]  Separador — aquí preparo el cambio de pantalla.`);
+Sec("08", "La demostración", "El sistema completo ejecutado sobre diez imágenes descargadas de internet")
+  .addNotes(`[32:55 – 33:00]  [PASO]  Separador.
+
+A partir de aquí muestro la demostración completa, ya ejecutada. Son diez imágenes que descargué de internet y que ningún modelo vio durante el entrenamiento.`);
 {
-  const s = L("Lo que van a ver", "Demostración",
-    "En lugar de afirmar que el trabajo es reproducible, lo ejecuto ahora.");
-  const pasos = [["1", "Descargar", "imágenes de basura de internet, en este momento"],
-                 ["2", "Soltar", "en una carpeta nueva del proyecto"],
-                 ["3", "Ejecutar", "los cuatro modelos procesan todo el lote"]];
+  const s = L("Cómo funciona la demostración", "Demostración · el flujo",
+    "Un solo comando procesa el lote completo con los cuatro modelos y guarda todo en disco.");
+  const pasos = [["1", "Descargar", "imágenes de basura de internet"],
+                 ["2", "Soltar", "en una carpeta del proyecto"],
+                 ["3", "Ejecutar", "«Run All» en la notebook"],
+                 ["4", "Recoger", "resultados y tabla resumen"]];
   pasos.forEach(([n, t, d], i) => {
-    const x = 0.62 + i * 4.18;
-    s.addShape(pres.shapes.OVAL, { x: x + 1.55, y: 2.1, w: 0.85, h: 0.85,
+    const x = 0.62 + i * 3.13;
+    s.addShape(pres.shapes.OVAL, { x: x + 1.05, y: 2.0, w: 0.8, h: 0.8,
       fill: { color: GRANATE }, line: { color: GRANATE, width: 0 } });
-    s.addText(n, { x: x + 1.55, y: 2.23, w: 0.85, h: 0.6, fontFace: F, fontSize: 22,
+    s.addText(n, { x: x + 1.05, y: 2.12, w: 0.8, h: 0.55, fontFace: F, fontSize: 20,
       bold: true, color: BG, align: "center", margin: 0 });
-    s.addText(t, { x, y: 3.15, w: 3.9, h: 0.45, fontFace: F, fontSize: 17, bold: true,
+    s.addText(t, { x, y: 2.95, w: 2.9, h: 0.4, fontFace: F, fontSize: 15.5, bold: true,
       color: INK, align: "center", margin: 0 });
-    s.addText(d, { x: x + 0.3, y: 3.62, w: 3.3, h: 0.7, fontFace: F, fontSize: 12,
+    s.addText(d, { x: x + 0.15, y: 3.36, w: 2.6, h: 0.6, fontFace: F, fontSize: 11.5,
       color: GRIS, align: "center", margin: 0 });
-    if (i < 2) flecha(s, x + 3.85, 2.35, 0.45);
+    if (i < 3) flecha(s, x + 2.95, 2.25, 0.35);
   });
-  card(s, 0.62, 4.6, 5.95, 1.9, AZUL, "Qué produce",
-    "Un collage por modelo con todo el lote · una tira comparativa por imagen mostrando los cuatro modelos lado a lado · indicadores de la sesión · una tabla resumen. Todo se guarda en disco automáticamente.", { bf: 12 });
-  card(s, 6.78, 4.6, 5.95, 1.9, GRANATE, "Qué observar",
-    "Son imágenes que ningún modelo vio durante el entrenamiento, y de dominios mezclados. La degradación fuera de dominio que acabo de medir también va a estar a la vista.", { bf: 12 });
-  s.addNotes(`[33:00 – 33:20]  [ANCLA]  →  SALIR DE LA PRESENTACIÓN
+  card(s, 0.62, 4.3, 3.9, 2.2, AZUL, "Qué recibe cada modelo",
+    "La misma lista de imágenes, sin ningún ajuste manual. El sistema detecta la sesión más reciente y procesa todo el lote automáticamente.", { bf: 11.5 });
+  card(s, 4.72, 4.3, 3.9, 2.2, VERDE, "Qué produce",
+    "Un collage por modelo · una tira comparativa por imagen · gráficas de indicadores · una tabla resumen · un archivo de créditos con la autoría detectada.", { bf: 11.5 });
+  card(s, 8.82, 4.3, 3.9, 2.2, GRANATE, "Por qué importa",
+    "Es la prueba de reproducibilidad: cualquiera puede descargar los pesos publicados, poner sus propias fotos y obtener este mismo flujo en unos minutos.", { bf: 11.5 });
+  s.addNotes(`[33:00 – 33:35]  [ANCLA]
 
-En lugar de afirmar que el trabajo es reproducible, lo ejecuto ahora.
+Así funciona la demostración. Descargo imágenes, las dejo en una carpeta del proyecto, ejecuto la notebook completa y recojo los resultados.
 
-Voy a descargar imágenes de basura de internet en este momento, las voy a dejar en una carpeta del proyecto, y voy a ejecutar la notebook completa. Los cuatro modelos procesan todo el lote.
+Cada modelo recibe exactamente la misma lista de imágenes, sin ningún ajuste manual: el sistema detecta la sesión más reciente y procesa todo el lote.
 
-Lo que produce: un collage por modelo, una tira comparativa por imagen con los cuatro modelos lado a lado, indicadores y una tabla resumen.
+Lo que produce es un collage por modelo, una tira comparativa por imagen, gráficas de indicadores, una tabla resumen y un archivo de créditos con la autoría que se pueda detectar en los metadatos.
 
-Y lo que quiero que observen: son imágenes que ningún modelo vio durante el entrenamiento, de dominios mezclados. La degradación fuera de dominio que acabo de medir también va a estar a la vista.
-
-[ACCIÓN: cambiar a la notebook 07 · crear la carpeta demo/input/en_vivo/ · Run All]
-[Mientras corre, narrar: primero YOLO sobre todo el lote, luego Faster R-CNN imagen por imagen, la máscara del FCN, y al final Grad-CAM]
-[PLAN B si falla la conexión: pasar a la siguiente lámina, que muestra una sesión ya ejecutada]`);
+Y por qué importa: es la prueba de reproducibilidad. Cualquiera puede descargar los pesos publicados, poner sus propias fotos y obtener este mismo flujo en unos minutos.`);
 }
 {
-  const s = L("La misma imagen, vista por los cuatro modelos", "Demostración · sesión de referencia",
-    "Salida real de una sesión de diez imágenes descargadas de internet.");
+  const s = L("Las diez imágenes de entrada", "Demostración · los datos",
+    "Descargadas de internet, sin anotaciones y sin relación con ninguno de los tres datasets de entrenamiento.");
+  await fit(s, A("d_entrada.png"), 0.4, 1.85, 12.55, 4.35);
+  s.addText([{ text: "Escenas mezcladas a propósito: ", options: { bold: true, color: INK } },
+             { text: "contenedores desbordados, veredas, parques, playas y avenidas — con distintas resoluciones, ángulos y distancias. Ninguna proviene de los dominios de entrenamiento.", options: { color: GRIS } }],
+    { x: 0.62, y: 6.35, w: 12.1, h: 0.5, fontFace: F, fontSize: 12.5, margin: 0 });
+  pie(s, "Imágenes descargadas de internet solo con fines ilustrativos. Solo una conserva metadatos de autoría (img_01 · Ake Dynamic); las demás son descargas anónimas. Serán reemplazadas por capturas propias.");
+  s.addNotes(`[33:35 – 34:20]  [ANCLA]
+
+Estas son las diez imágenes de entrada, tal como las imprime la notebook al inicio de la sesión.
+
+Las escogí mezcladas a propósito: contenedores desbordados, veredas, parques, playas y avenidas. Tienen resoluciones muy distintas —desde 335 por 597 hasta 2 560 por 1 920 píxeles—, ángulos distintos y distancias distintas.
+
+Y lo importante: ninguna proviene de los dominios de entrenamiento. Son fotos de internet, sin anotaciones. Eso las hace evidencia cualitativa, no una medición.
+
+Una nota sobre procedencia: solo una conserva metadatos de autoría —img_01, de Ake Dynamic—; las demás son descargas anónimas. Está declarado en el paper, y la intención es reemplazarlas por capturas propias más adelante.`);
+}
+{
+  const s = L("Paso 1 · YOLOv11n sobre todo el lote", "Demostración · detección en una etapa",
+    "El modelo de 2.6 M de parámetros, con umbral de confianza en 0.25.");
+  await fit(s, A("d_yolo.png"), 0.4, 1.85, 12.55, 4.35);
+  s.addText([{ text: "87 detecciones en total. ", options: { bold: true, color: AMBAR } },
+             { text: "Rinde bien en escenas cercanas y con objetos grandes (img_05: 23 · img_03: 19), y se queda corto cuando la escena es panorámica y los objetos se vuelven diminutos.", options: { color: GRIS } }],
+    { x: 0.62, y: 6.35, w: 12.1, h: 0.5, fontFace: F, fontSize: 12.5, margin: 0 });
+  s.addNotes(`[34:20 – 34:55]  [ANCLA]
+
+Primer paso: YOLOv11n procesa todo el lote de una vez. Es el modelo de 2.6 millones de parámetros, con el umbral de confianza en 0.25.
+
+En total encuentra 87 objetos. Fíjense en el patrón: rinde bien en escenas cercanas y con objetos grandes —img_05 con 23 detecciones, img_03 con 19— y se queda corto cuando la escena es panorámica y los objetos se vuelven diminutos.
+
+El caso extremo es img_10, la playa vista de lejos: cero detecciones. Volveremos a ese caso porque es el más instructivo de toda la sesión.`);
+}
+{
+  const s = L("Paso 2 · Faster R-CNN sobre el mismo lote", "Demostración · detección en dos etapas",
+    "El modelo de 41.3 M de parámetros, con umbral de confianza en 0.5.");
+  await fit(s, A("d_frcnn.png"), 0.4, 1.85, 12.55, 4.35);
+  s.addText([{ text: "211 detecciones en total, más del doble que YOLO. ", options: { bold: true, color: AZUL } },
+             { text: "Su red de propuestas genera muchos más candidatos: img_09 pasa de 15 a 45, e img_10 —donde YOLO no detectó nada— llega a 26.", options: { color: GRIS } }],
+    { x: 0.62, y: 6.35, w: 12.1, h: 0.5, fontFace: F, fontSize: 12.5, margin: 0 });
+  s.addNotes(`[34:55 – 35:30]  [ANCLA]
+
+Segundo paso: el mismo lote, ahora con Faster R-CNN. El modelo de 41.3 millones de parámetros, con umbral en 0.5.
+
+Encuentra 211 objetos: más del doble que YOLO. La razón está en la arquitectura que expliqué antes: su red de propuestas genera muchos más candidatos antes de decidir.
+
+Miren img_09: pasa de 15 detecciones a 45. Y img_10, donde YOLO no detectó absolutamente nada, aquí llega a 26.
+
+Esto es el mismo patrón que mostraban las tablas cuantitativas, ahora sobre imágenes que ningún modelo vio jamás.`);
+}
+{
+  const s = L("Paso 3 · FCN: qué superficie está cubierta", "Demostración · segmentación",
+    "En vez de contar objetos, marca los píxeles que corresponden a basura.");
+  await fit(s, A("d_fcn.png"), 0.4, 1.85, 12.55, 4.35);
+  s.addText([{ text: "Entre 3.3 % y 16.0 % de la escena, con 8.5 % de media. ", options: { bold: true, color: ROJO } },
+             { text: "Es una medida distinta y complementaria: img_05 y img_01 encabezan por superficie cubierta, aunque no sean las que más objetos individuales tienen.", options: { color: GRIS } }],
+    { x: 0.62, y: 6.35, w: 12.1, h: 0.5, fontFace: F, fontSize: 12.5, margin: 0 });
+  s.addNotes(`[35:30 – 36:00]  [ANCLA]
+
+Tercer paso: el FCN. En vez de contar objetos, marca los píxeles que corresponden a basura, y eso responde una pregunta distinta: cuánta superficie de la escena está cubierta.
+
+Los valores van de 3.3 a 16 por ciento, con una media de 8.5.
+
+Y noten algo interesante: img_05 e img_01 encabezan por superficie cubierta, aunque no son las que más objetos individuales tienen. Son dos formas distintas de medir el mismo problema, y para una municipalidad la superficie puede ser más útil que el conteo.`);
+}
+{
+  const s = L("Paso 4 · Grad-CAM: dónde mira el clasificador", "Demostración · interpretabilidad",
+    "Para cada imagen: el recorte que analiza y el mapa de calor de la decisión.");
+  await fit(s, A("d_gradcam.png"), 0.35, 1.85, 12.65, 4.4);
+  s.addText([{ text: "P(basura) = 1.00 en las diez imágenes, ", options: { bold: true, color: MORADO } },
+             { text: "y la activación se concentra sobre el objeto y no sobre el fondo. Es la verificación de que la red aprendió lo correcto, ahora sobre datos completamente nuevos.", options: { color: GRIS } }],
+    { x: 0.62, y: 6.4, w: 12.1, h: 0.5, fontFace: F, fontSize: 12.5, margin: 0 });
+  s.addNotes(`[36:00 – 36:35]  [ANCLA]
+
+Cuarto paso: Grad-CAM. Para cada imagen se toma un recorte —la detección más confiada de YOLO, o el centro si no hubo ninguna— y se genera el mapa de calor de la decisión del clasificador.
+
+El clasificador da probabilidad de basura igual a 1.00 en las diez imágenes. Y lo importante es dónde mira: la activación se concentra sobre el objeto, no sobre el pasto ni la vereda.
+
+Esta es exactamente la verificación que planteé al inicio como justificación para incluir interpretabilidad, y aquí está funcionando sobre datos completamente nuevos.`);
+}
+{
+  const s = L("La misma imagen, vista por los cuatro modelos", "Demostración · comparación por imagen",
+    "La salida que más ayuda a entender: cada escena atravesando el sistema completo.");
   await fit(s, A("strip_respaldo1.jpg"), 0.5, 1.9, 12.35, 2.25);
   await fit(s, A("strip_respaldo2.jpg"), 0.5, 4.3, 12.35, 2.25);
-  pie(s, "Columnas: original con el recorte del Grad-CAM marcado · YOLOv11n · Faster R-CNN · máscara FCN · mapa Grad-CAM.");
-  s.addNotes(`[33:20 – 35:00]  (durante y después de la demo)  [ANCLA]
+  pie(s, "Columnas: original con el recorte del Grad-CAM marcado en punteado · YOLOv11n · Faster R-CNN · máscara del FCN · mapa Grad-CAM.");
+  s.addNotes(`[36:35 – 37:15]  [ANCLA]
 
-Esto es lo que produce el sistema por cada imagen: el original con el recuadro punteado que marca de dónde sale el recorte del Grad-CAM, las detecciones de YOLO, las de Faster R-CNN, la máscara del FCN y el mapa de calor.
+Esta es la salida que más ayuda a entender el sistema: cada escena atravesando los cuatro modelos, lado a lado.
 
-Fíjense en el contraste entre las dos columnas de detección: Faster R-CNN propone consistentemente más candidatos que YOLO. Es exactamente el mismo patrón que mostraban las tablas cuantitativas, ahora sobre imágenes que ningún modelo vio nunca.
+De izquierda a derecha: el original con un recuadro punteado que marca de dónde sale el recorte del Grad-CAM; las detecciones de YOLO; las de Faster R-CNN; la máscara del FCN; y el mapa de calor.
 
-Y noten que el Grad-CAM se concentra sobre el objeto, no sobre el fondo: es la verificación de interpretabilidad que mencioné al principio, funcionando sobre datos completamente nuevos.`);
+Comparen las dos columnas de detección en cualquiera de las dos filas: Faster R-CNN llena la escena de cajas, YOLO es mucho más conservador. Ninguno de los dos está mal: son dos compromisos distintos entre precisión y recall, que es exactamente lo que expliqué en el bloque de métricas.`);
+}
+{
+  const s = L("El caso más instructivo de la sesión", "Demostración · cuando el modelo falla",
+    "img_10: una playa fotografiada de lejos. YOLO no detecta nada; Faster R-CNN encuentra 26 objetos.");
+  await fit(s, A("d_caso_img10.png"), 0.5, 1.85, 12.35, 3.9);
+  card(s, 0.62, 5.95, 5.95, 1.15, AMBAR, "Por qué YOLO no ve nada",
+    "A 640 px de entrada, los objetos de esta escena quedan en pocos píxeles: por debajo del umbral de confianza no sobrevive ninguna caja.", { bf: 11.5, tf: 13 });
+  card(s, 6.78, 5.95, 5.95, 1.15, GRANATE, "Qué ilustra",
+    "Es la misma degradación por escala que midió la matriz cross-domain — visible aquí, en vivo, sobre una foto cualquiera de internet.", { bf: 11.5, tf: 13 });
+  s.addNotes(`[37:15 – 37:55]  [ANCLA]
+
+Y este es el caso más instructivo de toda la sesión, porque es un fallo.
+
+img_10 es una playa fotografiada de lejos. YOLO no detecta absolutamente nada: cero cajas. Faster R-CNN encuentra 26 objetos.
+
+¿Por qué? A 640 píxeles de entrada, los objetos de esta escena quedan reducidos a unos pocos píxeles cada uno. Ninguna caja sobrevive al umbral de confianza.
+
+Y lo que ilustra es precisamente la degradación por escala que midió la matriz cross-domain: cuando el objeto se vuelve demasiado pequeño para las anclas del modelo, el detector deja de verlo. Aquí está pasando en vivo, sobre una foto cualquiera de internet.
+
+Es también un argumento a favor de la ablación de resolución: esta escena a 1 024 píxeles daría un resultado distinto.`);
+}
+{
+  const s = L("Los indicadores de la sesión", "Demostración · resultados agregados");
+  await fit(s, A("d_indicadores.png"), 0.5, 1.8, 12.35, 4.3);
+  s.addText([{ text: "Faster R-CNN propone más candidatos en las diez imágenes, sin excepción. ", options: { bold: true, color: INK } },
+             { text: "Ese comportamiento coincide con lo medido en el conjunto de test anotado, lo que sugiere que no es un artefacto de estas fotos en particular.", options: { color: GRIS } }],
+    { x: 0.62, y: 6.25, w: 12.1, h: 0.55, fontFace: F, fontSize: 12.5, margin: 0 });
+  s.addNotes(`[37:55 – 38:30]  [ANCLA]
+
+Los indicadores agregados de la sesión.
+
+A la izquierda, detecciones por imagen: Faster R-CNN en azul, YOLO en ámbar. Faster R-CNN propone más candidatos en las diez imágenes, sin una sola excepción.
+
+Ese detalle importa: el mismo comportamiento aparece en el conjunto de test anotado, donde sí puedo medir. Que se repita aquí sugiere que no es un artefacto de estas fotos en particular, sino una propiedad de las arquitecturas.
+
+A la derecha, el porcentaje de píxeles marcados como basura por el FCN, que es la lectura de superficie.`);
+}
+{
+  const s = L("La tabla resumen que genera la sesión", "Demostración · salida tabular");
+  const cab = ["imagen", "YOLO", "Faster R-CNN", "% píxeles basura", "P(basura)"];
+  const filas = [["img_01", "4", "25", "14.43", "1.00"], ["img_02", "10", "13", "6.21", "1.00"],
+                 ["img_03", "19", "29", "9.21", "1.00"], ["img_04", "5", "7", "8.49", "1.00"],
+                 ["img_05", "23", "28", "15.99", "1.00"], ["img_06", "6", "21", "3.37", "1.00"],
+                 ["img_07", "3", "9", "5.16", "1.00"], ["img_08", "2", "8", "8.16", "1.00"],
+                 ["img_09", "15", "45", "10.31", "1.00"], ["img_10", "0", "26", "3.27", "1.00"]];
+  const anchos = [1.9, 1.5, 2.0, 2.2, 1.6];
+  let x0 = 0.62;
+  cab.forEach((c, j) => {
+    s.addShape(pres.shapes.RECTANGLE, { x: x0, y: 1.85, w: anchos[j], h: 0.42,
+      fill: { color: INK }, line: { color: INK, width: 0 } });
+    s.addText(c, { x: x0 + 0.08, y: 1.9, w: anchos[j] - 0.16, h: 0.32, fontFace: F,
+      fontSize: 11, bold: true, color: BG, align: j === 0 ? "left" : "center", margin: 0 });
+    x0 += anchos[j];
+  });
+  filas.forEach((f, i) => {
+    const y = 2.32 + i * 0.42;
+    let x = 0.62;
+    f.forEach((v, j) => {
+      s.addShape(pres.shapes.RECTANGLE, { x, y, w: anchos[j], h: 0.42,
+        fill: { color: i % 2 ? BG_SUAVE : BG }, line: { color: REJILLA, width: 0.8 } });
+      const destaca = (j === 1 && v === "0") || (j === 2 && v === "45") || (j === 3 && v === "15.99");
+      s.addText(v, { x: x + 0.08, y: y + 0.06, w: anchos[j] - 0.16, h: 0.3, fontFace: F,
+        fontSize: 11, bold: destaca, color: destaca ? ROJO : (j === 0 ? INK : GRIS),
+        align: j === 0 ? "left" : "center", margin: 0 });
+      x += anchos[j];
+    });
+  });
+  card(s, 9.9, 1.85, 2.85, 2.1, AMBAR, "Totales",
+    "YOLO: 87 detecciones\nFaster R-CNN: 211\n\nSuperficie media cubierta: 8.5 %", { bf: 11.5, tf: 13 });
+  card(s, 9.9, 4.1, 2.85, 2.4, GRIS2, "Cómo leerla",
+    "Las tres celdas resaltadas son los extremos: el fallo de YOLO en img_10, la máxima densidad de Faster R-CNN en img_09 y la mayor superficie cubierta en img_05.", { bf: 11.5, tf: 13 });
+  pie(s, "La tabla se exporta como summary.csv junto con las imágenes anotadas y el archivo de créditos.");
+  s.addNotes(`[38:30 – 39:05]  [ANCLA]
+
+Y esta es la tabla resumen que genera la sesión, exportada como archivo CSV junto con todas las imágenes anotadas.
+
+Una fila por imagen, con las detecciones de cada detector, el porcentaje de superficie cubierta y la probabilidad del clasificador.
+
+Resalté las tres celdas de los extremos: el cero de YOLO en img_10, que es el fallo que acabo de explicar; las 45 detecciones de Faster R-CNN en img_09, que es la escena más densa; y el 15.99 por ciento de superficie en img_05.
+
+Los totales: 87 detecciones de YOLO contra 211 de Faster R-CNN, y una superficie media cubierta del 8.5 por ciento.`);
+}
+{
+  const s = L("Qué demuestra esta sesión", "Demostración · cierre");
+  const puntos = [
+    ["El sistema es reproducible de punta a punta", "Cualquiera descarga los pesos publicados, deja sus fotos en una carpeta y obtiene este mismo flujo. Sin ajustes manuales ni configuración por imagen.", VERDE],
+    ["Los patrones medidos reaparecen fuera de distribución", "Faster R-CNN propone más candidatos en las diez imágenes; la interpretabilidad sigue apuntando al objeto; y la degradación por escala se ve en img_10.", AZUL],
+    ["Pero es evidencia cualitativa, no una medición", "Estas imágenes no tienen anotaciones: no puedo calcular AP sobre ellas. Ilustran el comportamiento; los números del trabajo salen del conjunto de test anotado.", GRANATE],
+  ];
+  puntos.forEach(([t, d, c], i) => {
+    const y = 2.0 + i * 1.6;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.62, y, w: 0.12, h: 1.3,
+      fill: { color: c }, line: { color: c, width: 0 }, rectRadius: 0.03 });
+    s.addText(t, { x: 1.0, y, w: 11.7, h: 0.45, fontFace: F, fontSize: 16, bold: true,
+      color: INK, margin: 0 });
+    s.addText(d, { x: 1.0, y: y + 0.45, w: 11.7, h: 0.85, fontFace: F, fontSize: 12.5,
+      color: GRIS, margin: 0 });
+  });
+  s.addText("El código de la demostración es la notebook 07 del repositorio; la sesión completa está publicada con sus salidas.",
+    { x: 0.62, y: 6.75, w: 12.1, h: 0.4, fontFace: F, fontSize: 11.5, italic: true, color: GRIS2, margin: 0 });
+  s.addNotes(`[39:05 – 39:40]  [ANCLA]
+
+Para cerrar la demostración, tres puntos.
+
+Primero: el sistema es reproducible de punta a punta. Cualquiera descarga los pesos publicados, deja sus fotos en una carpeta y obtiene este mismo flujo, sin ajustes manuales ni configuración por imagen.
+
+Segundo: los patrones que medí en el conjunto de test reaparecen fuera de distribución. Faster R-CNN propone más candidatos en las diez imágenes, la interpretabilidad sigue apuntando al objeto, y la degradación por escala se ve claramente en img_10.
+
+Y tercero, con honestidad: esto es evidencia cualitativa, no una medición. Estas imágenes no tienen anotaciones, así que no puedo calcular AP sobre ellas. Ilustran el comportamiento del sistema; los números del trabajo salen del conjunto de test anotado.`);
 }
 {
   const s = slideBase(true);
